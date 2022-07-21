@@ -1,6 +1,6 @@
 package com.server.erentronic.item.keyboard;
 
-import com.server.erentronic.common.image.Image;
+import com.server.erentronic.item.keyboard.type.Switch;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class KeyboardImage {
+public class KeyboardSwitch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class KeyboardImage {
 	@ManyToOne
 	private Keyboard keyboard;
 
-	@JoinColumn
+	@JoinColumn(name = "switch_id")
 	@ManyToOne
-	private Image image;
+	private Switch aSwitch;
 }

@@ -1,5 +1,6 @@
 package com.server.erentronic.common.address;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,4 +13,12 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true)
+	private String fullAddress;
+
+	private String city;
+
+	private String street;
+
+	private String zipCode;
 }

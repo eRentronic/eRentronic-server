@@ -1,18 +1,19 @@
-package com.server.erentronic.common.image;
+package com.server.erentronic.item.keyboard.type;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Image {
+public class Switch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 1000, unique = true)
-	private String imageUrl;
+	@Enumerated(value = EnumType.STRING)
+	private SwitchType switchType;
 }

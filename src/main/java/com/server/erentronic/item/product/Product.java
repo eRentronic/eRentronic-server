@@ -11,34 +11,53 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 public abstract class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 
-	private String title;
+	protected String title;
 
 	@Lob
-	private String content;
+	protected String content;
 
-	private Integer price;
+	protected Integer price;
 
-	private Integer rentalPrice;
+	protected Integer rentalPrice;
 
-	private Boolean rentable;
+	protected Boolean rentable;
 
-	private Integer rentalProductCount;
+	protected Integer rentalProductCount;
 
-	private Integer quantity;
+	protected Integer quantity;
 
-	private Integer viewCount;
+	protected Integer viewCount;
 
 	@JoinColumn
 	@OneToOne
-	private Vendor vendor;
+	protected Vendor vendor;
+
+	protected Product(String title, String content, Integer price, Integer rentalPrice,
+		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount,
+		Vendor vendor) {
+
+		this.title = title;
+		this.content = content;
+		this.price = price;
+		this.rentalPrice = rentalPrice;
+		this.rentable = rentable;
+		this.rentalProductCount = rentalProductCount;
+		this.quantity = quantity;
+		this.viewCount = viewCount;
+		this.vendor = vendor;
+	}
 }

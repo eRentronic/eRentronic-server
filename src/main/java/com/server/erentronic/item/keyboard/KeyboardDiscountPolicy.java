@@ -7,9 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class KeyBoardDiscountPolicy {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class KeyboardDiscountPolicy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

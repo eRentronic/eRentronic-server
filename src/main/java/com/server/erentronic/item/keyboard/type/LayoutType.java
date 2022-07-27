@@ -1,5 +1,14 @@
 package com.server.erentronic.item.keyboard.type;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum LayoutType {
-	TEN_KEY_LESS, FULL, SIXTY_PERCENT
+
+	FULL("기본 "),
+	TEN_KEY_LESS("텐키리스"),
+	SEVENTY_FIVE_PERCENT("75%"),
+	SIXTY_FIVE_PERCENT("65%");
+
+	private final String name;
 }

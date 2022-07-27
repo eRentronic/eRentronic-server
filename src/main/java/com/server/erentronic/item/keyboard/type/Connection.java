@@ -6,8 +6,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Connection {
 
 	@Id
@@ -16,4 +20,9 @@ public class Connection {
 
 	@Enumerated(value = EnumType.STRING)
 	private ConnectionType connectionType;
+
+	@Builder
+	private Connection(ConnectionType connectionType) {
+		this.connectionType = connectionType;
+	}
 }

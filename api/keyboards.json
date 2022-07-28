@@ -1,0 +1,70 @@
+{
+  "keyboards": [
+    {
+      "id": 1,
+      "name": "PUF",
+      "content": "디테일 설명",
+      "image_urls": "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png",
+      "vendor": "해피해킹",
+      "rentable": true,
+      "price": 50000,
+      "rental_price": 4000,
+      "discount_policy": [
+        {
+          "id": 1,
+          "name": "시즌 할인"
+        },
+        {
+          "id": 3,
+          "name": "이벤트 할인"
+        }
+      ],
+      "connection": "무선",
+      "switch": [
+        "적축", "청축"
+      ],
+      "layout": "75%",
+      "view_count": 1
+    },
+    {
+      "id": 2,
+      "name": "HHKB PD-KB800W",
+      "content": "디테일 설명",
+      "image_urls": "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png",
+      "vendor": "해피해킹",
+      "rentable": true,
+      "price": 150000,
+      "rental_price": 5000,
+      "discount_policy": [
+        {
+          "id": 3,
+          "name": "이벤트 할인"
+        }
+      ],
+      "connection": "유/무선",
+      "switch": [
+        "적축", "청축", "검축"
+      ],
+      "layout": "full",
+      "view_count": 1
+    },
+    {
+      "id": 3,
+      "name": "고래",
+      "content": "디테일 설명",
+      "image_urls": "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png",
+      "vendor": "바밀로",
+      "rentable": false,
+      "price": 189000,
+      "rental_price": 8900,
+      "discount_policy": [
+      ],
+      "connection": "유선",
+      "switch": [
+        "적축", "청축", "저소음 적축"
+      ],
+      "layout": "75%",
+      "view_count": 1
+    }
+  ]
+}

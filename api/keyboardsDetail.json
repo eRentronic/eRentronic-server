@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "name": "PUF",
+  "content": "디테일설명",
+  "image_urls": [
+    "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png",
+    "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png",
+    "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png"
+  ],
+  "detail_image_urls": [
+    "https://cdn.pixabay.com/photo/2020/04/08/16/32/keyboard-5017973_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2020/04/08/16/32/keyboard-5017973_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2020/04/08/16/32/keyboard-5017973_960_720.jpg"
+  ],
+  "vendor": "해피해킹",
+  "rentable": true,
+  "price": 50000,
+  "rental_price": 4000,
+  "discount_policy": [
+    {
+      "id": 1,
+      "name": "시즌 할인"
+    },
+    {
+      "id": 3,
+      "name": "이벤트 할인"
+    }
+  ],
+  "connection": "무선",
+  "switch": [
+    "적축", "청축"
+  ],
+  "layout": "75%",
+  "view_count": 1
+}

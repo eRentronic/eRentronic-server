@@ -1,8 +1,10 @@
-package com.server.erentronic.common.vendor;
+package com.server.erentronic.item.keyboard.type;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public enum VendorType {
 
 	LOGITECH("로지텍"),

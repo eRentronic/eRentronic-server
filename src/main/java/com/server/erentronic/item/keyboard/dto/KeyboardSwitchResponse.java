@@ -1,10 +1,11 @@
 package com.server.erentronic.item.keyboard.dto;
 
 import com.server.erentronic.item.keyboard.type.Switch;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class KeyboardSwitchResponse {
 

@@ -1,17 +1,23 @@
 package com.server.erentronic.item.keyboard.service;
 
+import com.server.erentronic.item.keyboard.Keyboard;
+import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardFilterResponse;
+import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardSwitchResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardVendorResponse;
 import com.server.erentronic.item.keyboard.dto.keyboardLayoutResponse;
 import com.server.erentronic.item.keyboard.repository.ConnectionRepository;
+import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
 import com.server.erentronic.item.keyboard.repository.SwitchRepository;
 import com.server.erentronic.item.keyboard.repository.VendorRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +26,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class KeyboardService {
 
+	private final KeyboardRepository keyboardRepository;
+
 	private final VendorRepository vendorRepository;
 	private final ConnectionRepository connectionRepository;
 	private final SwitchRepository switchRepository;
 	private final LayoutRepository layoutRepository;
+
+	public Slice<KeyboardSimpleResponse> getKeyboardCards(Pageable pageable,
+		FilterCondition filterCondition) {
+
+		Slice<Keyboard> slices = keyboardRepository.findBy(pageable);
+
+		return slices.map(KeyboardSimpleResponse::of);
+	}
+
 
 	public KeyboardFilterResponse getFilters() {
 
@@ -39,6 +56,6 @@ public class KeyboardService {
 			.map(keyboardLayoutResponse::from)
 			.collect(Collectors.toList());
 
-		return new KeyboardFilterResponse(vendors, connections, switches, layouts);
+		return KeyboardFilterResponse.of(vendors, connections, switches, layouts);
 	}
 }

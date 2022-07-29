@@ -12,10 +12,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Keyboard extends Product {
 
 	@JoinColumn
@@ -34,6 +36,9 @@ public class Keyboard extends Product {
 	private Layout layout;
 
 	@OneToMany(mappedBy = "keyboard")
+	private final List<KeyboardImage> keyboardImages = new ArrayList<>();
+
+	@OneToMany(mappedBy = "keyboard")
 	private final List<KeyboardDiscountPolicy> discountPolicies = new ArrayList<>();
 
 	@Builder
@@ -41,5 +46,41 @@ public class Keyboard extends Product {
 		this.vendor = vendor;
 		this.connection = connection;
 		this.layout = layout;
+	}
+
+	public Long getId() {
+		return super.id;
+	}
+
+	public String getTitle() {
+		return super.title;
+	}
+
+	public String getContent() {
+		return super.content;
+	}
+
+	public Integer getPrice() {
+		return super.price;
+	}
+
+	public Integer getRentalPrice() {
+		return super.rentalPrice;
+	}
+
+	public Boolean getRentable() {
+		return super.rentable;
+	}
+
+	public Integer getRentalProductCount() {
+		return super.rentalProductCount;
+	}
+
+	public Integer getQuantity() {
+		return super.quantity;
+	}
+
+	public Integer getViewCount() {
+		return super.viewCount;
 	}
 }

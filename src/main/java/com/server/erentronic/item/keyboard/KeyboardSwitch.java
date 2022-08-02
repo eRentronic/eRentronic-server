@@ -26,4 +26,8 @@ public class KeyboardSwitch {
 	@JoinColumn(name = "switch_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Switch aSwitch;
+
+	public Switch getSwitch() {
+		return aSwitch;
+	}
 }

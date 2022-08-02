@@ -36,12 +36,6 @@ public class Keyboard extends Product {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Layout layout;
 
-	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY)
-	private final List<KeyboardImage> keyboardImages = new ArrayList<>();
-
-	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY)
-	private final List<KeyboardDiscountPolicy> discountPolicies = new ArrayList<>();
-
 	@Builder
 	private Keyboard(Vendor vendor, Connection connection, Layout layout) {
 		this.vendor = vendor;

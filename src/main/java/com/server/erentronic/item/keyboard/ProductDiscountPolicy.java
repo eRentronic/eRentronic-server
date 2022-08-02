@@ -1,6 +1,7 @@
 package com.server.erentronic.item.keyboard;
 
-import com.server.erentronic.common.image.Image;
+import com.server.erentronic.common.discountpolicy.DiscountPolicy;
+import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class KeyboardImage {
+public class ProductDiscountPolicy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +24,9 @@ public class KeyboardImage {
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Keyboard keyboard;
+	private Product product;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Image image;
+	private DiscountPolicy discountPolicy;
 }

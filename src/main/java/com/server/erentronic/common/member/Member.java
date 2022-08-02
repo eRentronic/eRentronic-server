@@ -2,6 +2,7 @@ package com.server.erentronic.common.member;
 
 import com.server.erentronic.common.address.Address;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +26,6 @@ public class Member {
 	private String email;
 
 	@JoinColumn
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Address address;
 }

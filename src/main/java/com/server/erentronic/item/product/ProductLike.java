@@ -3,6 +3,7 @@ package com.server.erentronic.item.product;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,10 +21,10 @@ public class ProductLike {
 	private Long id;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Product product;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Member member;
 }

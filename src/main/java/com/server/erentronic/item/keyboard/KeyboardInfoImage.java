@@ -2,6 +2,7 @@ package com.server.erentronic.item.keyboard;
 
 import com.server.erentronic.common.image.Image;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,10 +20,10 @@ public class KeyboardInfoImage {
 	private Long id;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Keyboard keyboard;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Image image;
 }

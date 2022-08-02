@@ -7,6 +7,7 @@ import com.server.erentronic.item.product.Product;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,24 +22,24 @@ import lombok.NoArgsConstructor;
 public class Keyboard extends Product {
 
 	@JoinColumn
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Vendor vendor;
 
 	@JoinColumn
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Connection connection;
 
-	@OneToMany(mappedBy = "keyboard")
+	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY)
 	private final List<KeyboardSwitch> keyboardSwitches = new ArrayList<>();
 
 	@JoinColumn
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Layout layout;
 
-	@OneToMany(mappedBy = "keyboard")
+	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY)
 	private final List<KeyboardImage> keyboardImages = new ArrayList<>();
 
-	@OneToMany(mappedBy = "keyboard")
+	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY)
 	private final List<KeyboardDiscountPolicy> discountPolicies = new ArrayList<>();
 
 	@Builder

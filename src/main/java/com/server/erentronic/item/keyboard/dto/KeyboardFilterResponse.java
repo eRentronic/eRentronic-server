@@ -15,13 +15,13 @@ public class KeyboardFilterResponse {
 
 	private final List<KeyboardSwitchResponse> switches;
 
-	private final List<keyboardLayoutResponse> layouts;
+	private final List<KeyboardLayoutResponse> layouts;
 
 	public static KeyboardFilterResponse of (
 		List<KeyboardVendorResponse> vendors,
 		List<KeyboardConnectionResponse> keyboardConnections,
 		List<KeyboardSwitchResponse> switches,
-		List<keyboardLayoutResponse> layouts) {
+		List<KeyboardLayoutResponse> layouts) {
 
 		return new KeyboardFilterResponse(vendors, keyboardConnections, switches, layouts);
 	}

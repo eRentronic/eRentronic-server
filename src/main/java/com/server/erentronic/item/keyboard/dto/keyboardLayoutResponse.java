@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class keyboardLayoutResponse {
+public class KeyboardLayoutResponse {
 
 	private final Long id;
 
 	private final String name;
 
-	public static keyboardLayoutResponse from(Layout layout) {
-		return new keyboardLayoutResponse(layout.getId(), layout.getLayoutType().getName());
+	public static KeyboardLayoutResponse from(Layout layout) {
+		return new KeyboardLayoutResponse(layout.getId(), layout.getLayoutType().getName());
 	}
 }

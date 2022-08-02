@@ -3,11 +3,12 @@ package com.server.erentronic.item.keyboard.service;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
+import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardFilterResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardSwitchResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardVendorResponse;
-import com.server.erentronic.item.keyboard.dto.keyboardLayoutResponse;
+import com.server.erentronic.item.keyboard.dto.KeyboardLayoutResponse;
 import com.server.erentronic.item.keyboard.repository.ConnectionRepository;
 import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
@@ -41,6 +42,14 @@ public class KeyboardService {
 		return slices.map(KeyboardSimpleResponse::of);
 	}
 
+	public KeyboardDetailResponse getKeyboardDetail(Long id) {
+		Keyboard keyboard = keyboardRepository.findById(id).orElseThrow(RuntimeException::new);
+		keyboardRepository.findInfoImagesByKeyboardId(id);
+		keyboardRepository.findSwitchesByKeyboardId(id);
+		keyboardRepository.findDiscountPoliciesByKeyboardId(id);
+
+		return KeyboardDetailResponse.from(keyboard);
+	}
 
 	public KeyboardFilterResponse getFilters() {
 
@@ -52,8 +61,8 @@ public class KeyboardService {
 		List<KeyboardSwitchResponse> switches = switchRepository.findAll().stream()
 			.map(KeyboardSwitchResponse::from)
 			.collect(Collectors.toList());
-		List<keyboardLayoutResponse> layouts = layoutRepository.findAll().stream()
-			.map(keyboardLayoutResponse::from)
+		List<KeyboardLayoutResponse> layouts = layoutRepository.findAll().stream()
+			.map(KeyboardLayoutResponse::from)
 			.collect(Collectors.toList());
 
 		return KeyboardFilterResponse.of(vendors, connections, switches, layouts);

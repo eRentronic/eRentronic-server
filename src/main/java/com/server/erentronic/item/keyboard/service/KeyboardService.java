@@ -37,8 +37,7 @@ public class KeyboardService {
 	public Slice<KeyboardSimpleResponse> getKeyboardCards(Pageable pageable,
 		FilterCondition filterCondition) {
 
-		Slice<Keyboard> slices = keyboardRepository.findBy(pageable);
-
+		Slice<Keyboard> slices = keyboardRepository.findByFilterCondition(pageable, filterCondition);
 		return slices.map(KeyboardSimpleResponse::of);
 	}
 

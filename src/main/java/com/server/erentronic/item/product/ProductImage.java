@@ -1,7 +1,9 @@
 package com.server.erentronic.item.product;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 import com.server.erentronic.common.image.Image;
-import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,6 @@ public class ProductImage {
 	private Product product;
 
 	@JoinColumn
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	private Image image;
 }

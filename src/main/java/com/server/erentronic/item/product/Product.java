@@ -1,5 +1,7 @@
 package com.server.erentronic.item.product;
 
+import static javax.persistence.CascadeType.*;
+
 import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +47,10 @@ public abstract class Product {
 
 	protected Integer viewCount;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	protected final List<ProductImage> productImages = new ArrayList<>();
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	protected final List<ProductInfoImage> productInfoImages = new ArrayList<>();
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

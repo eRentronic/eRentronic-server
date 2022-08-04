@@ -17,7 +17,7 @@ INSERT INTO member(name, email, address_id)
 VALUES ('name', 'mock@mock.com', 1);
 
 INSERT INTO discount_policy(title, rate)
-VALUES ('이벤트 할인', 0.05), ('신제품 할인', 0.10);
+VALUES ('이벤트 할인', 0.0225), ('신제품 할인', 0.10);
 
 INSERT INTO product(DTYPE, CONTENT,	PRICE, QUANTITY, RENTABLE, RENTAL_PRICE, RENTAL_PRODUCT_COUNT, TITLE, VIEW_COUNT)
 VALUES ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙', 53500, 10, true, 5000, 5, 'HACKER K660', 1),
@@ -36,7 +36,7 @@ INSERT INTO keyboard(id, connection_id, layout_id, vendor_id)
 VALUES (1, 1, 1, 1), (2, 1, 2, 2), (3, 1, 3, 3), (4, 1, 2, 4), (5, 2, 1, 2), (6, 3, 1, 1), (7, 3, 1, 2), (8, 2, 3, 3), (9, 3, 1, 2), (10, 2, 1, 1), (11, 1, 1, 5);
 
 INSERT INTO product_discount_policy(product_id, discount_policy_id)
-VALUES (1, 1), (1, 2), (2, 2), (3, 1), (4, 2), (5, 1), (6, 2), (7, 1), (8, 2), (9, 1), (10, 2);
+VALUES (1, 1), (1, 2), (3, 1), (5, 1), (6, 2), (7, 1), (8, 2), (9, 1), (10, 2);
 
 INSERT INTO image(image_url)
 VALUES ('https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png'),

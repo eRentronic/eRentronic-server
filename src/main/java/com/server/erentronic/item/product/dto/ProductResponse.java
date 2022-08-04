@@ -25,6 +25,8 @@ public class ProductResponse {
 
 	private final Boolean like;
 
+	private final Boolean inBucket;
+
 	public static ProductResponse from(Product product) {
 		return new ProductResponse(
 			product.getId(),
@@ -33,7 +35,8 @@ public class ProductResponse {
 			product.getProductImages().get(0).getImage().getImageUrl(),
 			product.getPrice(), product.getRentalPrice(),
 			product.getRentable(),
-			null
+			false,
+			false
 		);
 	}
 }

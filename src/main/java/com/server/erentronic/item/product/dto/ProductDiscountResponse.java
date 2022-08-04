@@ -13,8 +13,12 @@ public class ProductDiscountResponse {
 
 	private final String title;
 
+	private final String saleRate;
+
 	public static ProductDiscountResponse from(ProductDiscountPolicy productDiscountPolicy) {
 		return new ProductDiscountResponse(productDiscountPolicy.getDiscountPolicy().getId(),
-			productDiscountPolicy.getDiscountPolicy().getTitle());
+			productDiscountPolicy.getDiscountPolicy().getTitle(),
+			String.valueOf(productDiscountPolicy.getDiscountPolicy().getRate() * 100)
+		);
 	}
 }

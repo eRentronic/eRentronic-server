@@ -1,7 +1,6 @@
 package com.server.erentronic.item.product;
 
 import com.server.erentronic.common.member.Member;
-import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

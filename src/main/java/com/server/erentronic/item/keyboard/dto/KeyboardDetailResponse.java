@@ -1,9 +1,9 @@
 package com.server.erentronic.item.keyboard.dto;
 
 import com.server.erentronic.item.keyboard.Keyboard;
+import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
-import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.product.dto.DiscountInfoResponse;
 import com.server.erentronic.item.product.dto.ImageResponse;
 import com.server.erentronic.item.product.dto.ProductResponse;

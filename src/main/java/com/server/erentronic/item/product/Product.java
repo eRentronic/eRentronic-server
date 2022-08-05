@@ -1,6 +1,7 @@
 package com.server.erentronic.item.product;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 
 import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
 import java.util.ArrayList;

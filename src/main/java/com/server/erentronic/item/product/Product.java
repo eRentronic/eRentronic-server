@@ -4,6 +4,8 @@ import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 
 import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
+import com.server.erentronic.item.product.type.Connection;
+import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
@@ -14,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +52,14 @@ public abstract class Product {
 
 	protected Integer viewCount;
 
+	@JoinColumn
+	@OneToOne(fetch = FetchType.LAZY)
+	protected Vendor vendor;
+
+	@JoinColumn
+	@OneToOne(fetch = FetchType.LAZY)
+	protected Connection connection;
+
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	protected final List<ProductImage> productImages = new ArrayList<>();
 
@@ -58,7 +70,7 @@ public abstract class Product {
 	protected final List<ProductDiscountPolicy> discountPolicies = new ArrayList<>();
 
 	protected Product(String title, String content, Integer price, Integer rentalPrice,
-		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount) {
+		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount, Vendor vendor) {
 
 		this.title = title;
 		this.content = content;
@@ -68,5 +80,6 @@ public abstract class Product {
 		this.rentalProductCount = rentalProductCount;
 		this.quantity = quantity;
 		this.viewCount = viewCount;
+		this.vendor = vendor;
 	}
 }

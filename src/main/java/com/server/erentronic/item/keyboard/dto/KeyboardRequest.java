@@ -3,12 +3,11 @@ package com.server.erentronic.item.keyboard.dto;
 import com.server.erentronic.common.image.Image;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
-import com.server.erentronic.item.keyboard.type.Connection;
+import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.keyboard.type.Layout;
-import com.server.erentronic.item.keyboard.type.Vendor;
+import com.server.erentronic.item.product.type.Vendor;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -50,8 +49,6 @@ public class KeyboardRequest {
 		List<KeyboardSwitch> keyboardSwitches) {
 
 		Keyboard keyboard = Keyboard.builder()
-			.vendor(vendor)
-			.connection(connection)
 			.layout(layout)
 			.keyboardSwitches(keyboardSwitches)
 			.build();
@@ -64,6 +61,8 @@ public class KeyboardRequest {
 		keyboard.setRentalProductCount(rentalProductCount);
 		keyboard.setQuantity(quantity);
 		keyboard.setViewCount(1);
+		keyboard.setVendor(vendor);
+		keyboard.setConnection(connection);
 
 		productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
 			ProductImage.of(keyboard, Image.builder().imageUrl(imageUrl).build()))

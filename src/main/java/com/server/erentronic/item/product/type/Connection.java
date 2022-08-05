@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.type;
+package com.server.erentronic.item.product.type;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,11 +22,15 @@ public class Connection {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	private ProductType productType;
+
 	@Enumerated(value = EnumType.STRING)
 	private ConnectionType connectionType;
 
 	@Builder
-	private Connection(ConnectionType connectionType) {
+	private Connection(ProductType productType, ConnectionType connectionType) {
+		this.productType = productType;
 		this.connectionType = connectionType;
 	}
 }

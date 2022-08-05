@@ -1,6 +1,6 @@
 package com.server.erentronic.item.keyboard.dto;
 
-import com.server.erentronic.item.keyboard.type.Vendor;
+import com.server.erentronic.item.product.type.Vendor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

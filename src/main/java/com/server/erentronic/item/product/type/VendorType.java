@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.type;
+package com.server.erentronic.item.product.type;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

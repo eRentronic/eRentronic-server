@@ -3,9 +3,9 @@ package com.server.erentronic.item.keyboard;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 
-import com.server.erentronic.item.keyboard.type.Connection;
+import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.keyboard.type.Layout;
-import com.server.erentronic.item.keyboard.type.Vendor;
+import com.server.erentronic.item.product.type.Vendor;
 import com.server.erentronic.item.product.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +24,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Keyboard extends Product {
 
-	@JoinColumn
-	@OneToOne(fetch = FetchType.LAZY)
-	private Vendor vendor;
-
-	@JoinColumn
-	@OneToOne(fetch = FetchType.LAZY)
-	private Connection connection;
-
 	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	private final List<KeyboardSwitch> keyboardSwitches = new ArrayList<>();
 
@@ -40,9 +32,7 @@ public class Keyboard extends Product {
 	private Layout layout;
 
 	@Builder
-	private Keyboard(Vendor vendor, Connection connection, Layout layout, List<KeyboardSwitch> keyboardSwitches) {
-		this.vendor = vendor;
-		this.connection = connection;
+	private Keyboard(Layout layout, List<KeyboardSwitch> keyboardSwitches) {
 		this.layout = layout;
 		this.keyboardSwitches.addAll(keyboardSwitches);
 	}
@@ -83,6 +73,14 @@ public class Keyboard extends Product {
 		return super.viewCount;
 	}
 
+	public Vendor getVendor() {
+		return super.vendor;
+	}
+
+	public Connection getConnection() {
+		return super.connection;
+	}
+
 	public void setId(Long id) {
 		super.id = id;
 	}
@@ -121,5 +119,13 @@ public class Keyboard extends Product {
 
 	public void setKeyboardSwitches(List<KeyboardSwitch> keyboardSwitches) {
 		this.keyboardSwitches.addAll(keyboardSwitches);
+	}
+
+	public void setVendor(Vendor vendor) {
+		super.vendor = vendor;
+	}
+
+	public void setConnection(Connection connection) {
+		super.connection = connection;
 	}
 }

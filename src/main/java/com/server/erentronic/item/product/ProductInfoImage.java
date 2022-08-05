@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +32,20 @@ public class ProductInfoImage {
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	private Image image;
+
+	@Builder
+	private ProductInfoImage(Long id, Product product, Image image) {
+		this.id = id;
+		this.product = product;
+		this.image = image;
+	}
+
+	public static ProductInfoImage of(Product product, Image image) {
+
+		return ProductInfoImage.builder()
+			.id(null)
+			.product(product)
+			.image(image)
+			.build();
+	}
 }

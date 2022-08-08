@@ -1,4 +1,4 @@
-package com.server.erentronic.common.vendor;
+package com.server.erentronic.item.keyboard.type;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -6,12 +6,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "keyboard_vendor")
+@Getter
 public class Vendor {
 
 	@Id

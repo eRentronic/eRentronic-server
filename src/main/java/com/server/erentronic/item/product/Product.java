@@ -1,22 +1,25 @@
 package com.server.erentronic.item.product;
 
-import com.server.erentronic.common.vendor.Vendor;
+import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 public abstract class Product {
@@ -42,13 +45,17 @@ public abstract class Product {
 
 	protected Integer viewCount;
 
-	@JoinColumn
-	@OneToOne
-	protected Vendor vendor;
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	protected final List<ProductImage> productImages = new ArrayList<>();
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	protected final List<ProductInfoImage> productInfoImages = new ArrayList<>();
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	protected final List<ProductDiscountPolicy> discountPolicies = new ArrayList<>();
 
 	protected Product(String title, String content, Integer price, Integer rentalPrice,
-		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount,
-		Vendor vendor) {
+		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount) {
 
 		this.title = title;
 		this.content = content;
@@ -58,6 +65,5 @@ public abstract class Product {
 		this.rentalProductCount = rentalProductCount;
 		this.quantity = quantity;
 		this.viewCount = viewCount;
-		this.vendor = vendor;
 	}
 }

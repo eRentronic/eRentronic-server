@@ -1,7 +1,9 @@
-package com.server.erentronic.item.keyboard;
+package com.server.erentronic.item.product;
 
-import com.server.erentronic.common.discountpolicy.DiscountPolicy;
+import com.server.erentronic.common.member.Member;
+import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,17 +14,17 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class KeyboardDiscountPolicy {
+public class ProductLike {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@JoinColumn
-	@ManyToOne
-	private Keyboard keyboard;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Product product;
 
 	@JoinColumn
-	@ManyToOne
-	private DiscountPolicy discountPolicy;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Member member;
 }

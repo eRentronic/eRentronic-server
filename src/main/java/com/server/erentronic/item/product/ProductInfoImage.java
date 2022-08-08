@@ -1,31 +1,32 @@
-package com.server.erentronic.common.member;
+package com.server.erentronic.item.product;
 
-import com.server.erentronic.common.address.Address;
+import com.server.erentronic.common.image.Image;
+import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Email;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+@Getter
+public class ProductInfoImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-
-	@Email
-	private String email;
+	@JoinColumn
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Product product;
 
 	@JoinColumn
-	@OneToOne(fetch = FetchType.LAZY)
-	private Address address;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Image image;
 }

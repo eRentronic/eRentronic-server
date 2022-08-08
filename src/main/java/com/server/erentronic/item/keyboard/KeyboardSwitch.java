@@ -2,6 +2,7 @@ package com.server.erentronic.item.keyboard;
 
 import com.server.erentronic.item.keyboard.type.Switch;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,10 +20,14 @@ public class KeyboardSwitch {
 	private Long id;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Keyboard keyboard;
 
 	@JoinColumn(name = "switch_id")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Switch aSwitch;
+
+	public Switch getSwitch() {
+		return aSwitch;
+	}
 }

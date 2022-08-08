@@ -3,6 +3,7 @@ package com.server.erentronic.common.order;
 import com.server.erentronic.item.product.Product;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,11 +27,11 @@ public abstract class Order {
 	private Long id;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private OrderSheet orderSheet;
 
 	@JoinColumn
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Product product;
 
 	private Integer quantity;

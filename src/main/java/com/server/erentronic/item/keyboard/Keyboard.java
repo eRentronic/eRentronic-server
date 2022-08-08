@@ -3,10 +3,10 @@ package com.server.erentronic.item.keyboard;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 
-import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.keyboard.type.Layout;
-import com.server.erentronic.item.product.type.Vendor;
 import com.server.erentronic.item.product.Product;
+import com.server.erentronic.item.product.type.Connection;
+import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;

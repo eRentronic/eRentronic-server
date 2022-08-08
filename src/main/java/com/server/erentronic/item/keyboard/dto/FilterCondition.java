@@ -16,6 +16,7 @@ public class FilterCondition {
 
 	private final List<Long> switchIds;
 
-	// 1이면 구매가능, 2면 대여가능
-	private final List<Long> availableServices;
+	private final Boolean rentable;
+
+	private final Boolean purchasable;
 }

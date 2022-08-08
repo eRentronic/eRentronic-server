@@ -36,10 +36,9 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 				inConditionsWith(keyboard.connection.id, condition.getConnectionIds()),
 				inConditionsWith(keyboard.layout.id, condition.getLayoutIds()),
 				inConditionsWith(keyboard.vendor.id, condition.getVendorIds()),
-				keyboardSwitch.eqAny(
-					JPAExpressions.selectFrom(subKeyboardSwitch)
-						.where(inConditionsWith(subKeyboardSwitch.aSwitch.id, condition.getSwitchIds()))
-				)
+				eqAnySwitchIds(condition.getSwitchIds(), subKeyboardSwitch),
+				isRentable(condition.getRentable()),
+				isPurchasable(condition.getPurchasable())
 			)
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize() + 1L)
@@ -54,10 +53,36 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 		return new SliceImpl<>(contents, pageable, hasNext);
 	}
 
+	private BooleanExpression eqAnySwitchIds(List<Long> switchIds, QKeyboardSwitch subKeyboardSwitch) {
+		if (switchIds == null) {
+			return null;
+		}
+		
+		return keyboardSwitch.eqAny(
+			JPAExpressions.selectFrom(subKeyboardSwitch)
+				.where(inConditionsWith(subKeyboardSwitch.aSwitch.id, switchIds)));
+	}
+
 	private BooleanExpression inConditionsWith(NumberPath<Long> target, List<Long> filters) {
 		if (filters == null) {
 			return null;
 		}
 		return target.in(filters);
+	}
+
+	private BooleanExpression isRentable(Boolean rentable) {
+		if (rentable == null) {
+			return null;
+		}
+
+		return keyboard.rentable.eq(rentable);
+	}
+
+	private BooleanExpression isPurchasable(Boolean purchasable) {
+		if (purchasable == null || !purchasable) {
+			return null;
+		}
+
+		return keyboard.quantity.goe(1);
 	}
 }

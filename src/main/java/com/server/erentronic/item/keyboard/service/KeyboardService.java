@@ -1,14 +1,13 @@
 package com.server.erentronic.item.keyboard.service;
 
 import static com.server.erentronic.common.message.Message.PRODUCT_CREATED_MESSAGE;
+import static com.server.erentronic.common.message.Message.PRODUCT_DELETED_MESSAGE;
 import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
-import com.server.erentronic.common.dto.CreatedResponse;
+import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
-import com.server.erentronic.item.keyboard.KeyboardSwitch;
-import com.server.erentronic.item.keyboard.dto.DeletedResponse;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
@@ -57,7 +56,7 @@ public class KeyboardService {
 	}
 
 	@Transactional
-	public CreatedResponse postKeyboard(KeyboardRequest keyboardRequest) {
+	public CUDResponse postKeyboard(KeyboardRequest keyboardRequest) {
 		Long vendorId = keyboardRequest.getVendorId();
 		Long connectionId = keyboardRequest.getConnectionId();
 		Long layoutId = keyboardRequest.getLayoutId();
@@ -75,7 +74,7 @@ public class KeyboardService {
 
 		keyboardRepository.save(keyboard);
 
-		return CreatedResponse.of(keyboard.getId(), PRODUCT_CREATED_MESSAGE.getMessage());
+		return CUDResponse.of(keyboard.getId(), PRODUCT_CREATED_MESSAGE);
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
@@ -93,9 +92,9 @@ public class KeyboardService {
 	}
 
 	@Transactional
-	public DeletedResponse deleteKeyboard(Long id) {
+	public CUDResponse deleteKeyboard(Long id) {
 		keyboardRepository.deleteById(id);
-		return DeletedResponse.from(id);
+		return CUDResponse.of(id, PRODUCT_DELETED_MESSAGE);
 	}
 
 	public KeyboardFilterResponse getFilters() {

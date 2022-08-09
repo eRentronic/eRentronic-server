@@ -1,12 +1,12 @@
 package com.server.erentronic.item.keyboard.controller;
 
-import com.server.erentronic.common.dto.CreatedResponse;
-import com.server.erentronic.item.keyboard.dto.DeletedResponse;
+import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardFilterResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
+import com.server.erentronic.item.keyboard.dto.KeyboardUpdateRequest;
 import com.server.erentronic.item.keyboard.service.KeyboardService;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -17,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,7 @@ public class KeyboardController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CreatedResponse postKeyboard(@RequestBody @Valid KeyboardRequest keyboardRequest) {
+	public CUDResponse postKeyboard(@RequestBody @Valid KeyboardRequest keyboardRequest) {
 		return keyboardService.postKeyboard(keyboardRequest);
 	}
 
@@ -49,7 +50,7 @@ public class KeyboardController {
 	}
 
 	@DeleteMapping("/{id}")
-	public DeletedResponse deleteKeyboard(@PathVariable @Positive Long id) {
+	public CUDResponse deleteKeyboard(@PathVariable @Positive Long id) {
 		return keyboardService.deleteKeyboard(id);
 	}
 

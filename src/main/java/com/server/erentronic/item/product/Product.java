@@ -66,8 +66,11 @@ public abstract class Product {
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	protected final List<ProductInfoImage> productInfoImages = new ArrayList<>();
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
 	protected final List<ProductDiscountPolicy> discountPolicies = new ArrayList<>();
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
+	protected final List<ProductLike> productLikes = new ArrayList<>();
 
 	protected Product(String title, String content, Integer price, Integer rentalPrice,
 		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount, Vendor vendor) {

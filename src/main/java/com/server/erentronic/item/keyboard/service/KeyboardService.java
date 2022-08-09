@@ -2,12 +2,14 @@ package com.server.erentronic.item.keyboard.service;
 
 import static com.server.erentronic.common.message.Message.PRODUCT_CREATED_MESSAGE;
 import static com.server.erentronic.common.message.Message.PRODUCT_DELETED_MESSAGE;
+import static com.server.erentronic.common.message.Message.PRODUCT_PATCHED_MESSAGE;
 import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
+import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
@@ -16,6 +18,7 @@ import com.server.erentronic.item.keyboard.dto.KeyboardLayoutResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardSwitchResponse;
+import com.server.erentronic.item.keyboard.dto.KeyboardUpdateRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardVendorResponse;
 import com.server.erentronic.item.keyboard.repository.ConnectionRepository;
 import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
@@ -75,6 +78,42 @@ public class KeyboardService {
 		keyboardRepository.save(keyboard);
 
 		return CUDResponse.of(keyboard.getId(), PRODUCT_CREATED_MESSAGE);
+	}
+
+	@Transactional
+	public CUDResponse updateKeyboard(Long id, KeyboardUpdateRequest keyboardUpdateRequest) {
+		Long connectionId = keyboardUpdateRequest.getConnectionId();
+		Long layoutId = keyboardUpdateRequest.getLayoutId();
+		List<Long> switchIds = keyboardUpdateRequest.getSwitchIds();
+
+		Keyboard keyboard = keyboardRepository.findById(id)
+			.orElseThrow(RuntimeException::new);
+
+		Connection connection = null;
+		if (connectionId != null) {
+			connection = connectionRepository.findById(connectionId)
+				.orElseThrow(RuntimeException::new);
+		}
+
+		Layout layout = null;
+		if (layoutId != null) {
+			layout = layoutRepository.findById(layoutId)
+				.orElseThrow(RuntimeException::new);
+		}
+
+		List<KeyboardSwitch> switches = null;
+		if (switchIds != null) {
+			switches = switchRepository.findAllById(switchIds).stream()
+				.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
+				.collect(Collectors.toList());
+		}
+
+		// Keyboard update 메서드에서 TODO 이미지를 변경할 때 기존에 등록되었던 이미지들을 어떻게 처리할지?
+		keyboard.update(keyboardUpdateRequest.toEntity(connection, layout, switches));
+//		keyboardUpdateRequest.getProductImageUrls();
+//		keyboardUpdateRequest.getProductInfoImageUrls();
+
+		return CUDResponse.of(keyboard.getId(), PRODUCT_PATCHED_MESSAGE);
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {

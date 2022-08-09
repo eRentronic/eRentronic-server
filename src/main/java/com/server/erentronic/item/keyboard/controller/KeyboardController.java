@@ -54,6 +54,14 @@ public class KeyboardController {
 		return keyboardService.deleteKeyboard(id);
 	}
 
+	@PatchMapping("/{id}")
+	public CUDResponse updateKeyboard(
+		@PathVariable @Positive Long id,
+		@RequestBody @Valid KeyboardUpdateRequest keyboardUpdateRequest
+		) {
+		return keyboardService.updateKeyboard(id, keyboardUpdateRequest);
+	}
+
 	@GetMapping("/filters")
 	public KeyboardFilterResponse getFilters() {
 		return keyboardService.getFilters();

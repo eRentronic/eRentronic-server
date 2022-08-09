@@ -4,14 +4,10 @@ import com.server.erentronic.common.image.Image;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.type.Layout;
-import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.type.Connection;
-import com.server.erentronic.item.product.type.Vendor;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -23,7 +19,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class KeyboardRequest {
+public class KeyboardUpdateRequest {
 
 	@NotBlank(message = "(키보드 상품 명) 필수 입력란 입니다.")
 	private String title;
@@ -55,9 +51,6 @@ public class KeyboardRequest {
 	@Valid
 	private List<URLRequest> productInfoImageUrls;
 
-	@NotNull(message = "(제조사) 필수 입력란 입니다.")
-	private Long vendorId;
-
 	@NotNull(message = "(연결 방식) 필수 입력란 입니다.")
 	private Long connectionId;
 
@@ -67,13 +60,11 @@ public class KeyboardRequest {
 	@NotNull(message = "(키보드 배열) 필수 입력란 입니다.")
 	private Long layoutId;
 
-	public Keyboard toEntity(Vendor vendor, Connection connection, Layout layout, List<Switch> switches) {
+	public Keyboard toEntity(Connection connection, Layout layout, List<KeyboardSwitch> keyboardSwitches) {
 
-		Keyboard keyboard = Keyboard.builder()
-			.layout(layout)
-			.keyboardSwitches(Collections.emptyList())
-			.build();
-
+		Keyboard keyboard = Keyboard.builder().build();
+		keyboard.changeLayout(layout);
+		keyboard.changeKeyboardSwitches(keyboardSwitches);
 		keyboard.modifyTitle(title);
 		keyboard.modifyContent(content);
 		keyboard.updatePrice(price);
@@ -81,22 +72,19 @@ public class KeyboardRequest {
 		keyboard.changeRentable(rentable);
 		keyboard.updateRentalProductCount(rentalProductCount);
 		keyboard.updateQuantity(quantity);
-		keyboard.updateViewCount(1);
-		keyboard.setVendor(vendor);
-		keyboard.changeConnection(connection);
 
-		productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
-			ProductImage.of(keyboard, Image.builder().imageUrl(imageUrl.getUrl()).build()))
-		);
-		productInfoImageUrls.forEach(infoImageUrl -> keyboard.getProductInfoImages().add(
-			ProductInfoImage.of(keyboard, Image.builder().imageUrl(infoImageUrl.getUrl()).build()))
-		);
-
-		List<KeyboardSwitch> keyboardSwitches = switches.stream()
-			.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
-			.collect(Collectors.toList());
-
-		keyboard.changeKeyboardSwitches(keyboardSwitches);
+		if (productImageUrls != null) {
+			productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
+				ProductImage.of(keyboard,
+					Image.builder().imageUrl(imageUrl.getUrl()).build()))
+			);
+		}
+		if (productInfoImageUrls != null) {
+			productInfoImageUrls.forEach(infoImageUrl -> keyboard.getProductInfoImages().add(
+				ProductInfoImage.of(keyboard,
+					Image.builder().imageUrl(infoImageUrl.getUrl()).build()))
+			);
+		}
 
 		return keyboard;
 	}

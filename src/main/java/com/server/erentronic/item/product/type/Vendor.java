@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.type;
+package com.server.erentronic.item.product.type;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,10 +23,14 @@ public class Vendor {
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
+	private ProductType productType;
+
+	@Enumerated(EnumType.STRING)
 	private VendorType vendorType;
 
 	@Builder
-	private Vendor(VendorType vendorType) {
+	private Vendor(ProductType productType ,VendorType vendorType) {
+		this.productType = productType;
 		this.vendorType = vendorType;
 	}
 }

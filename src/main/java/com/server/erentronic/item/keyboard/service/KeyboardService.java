@@ -1,6 +1,7 @@
 package com.server.erentronic.item.keyboard.service;
 
 import static com.server.erentronic.common.message.Message.PRODUCT_CREATED_MESSAGE;
+import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CreatedResponse;
 import com.server.erentronic.item.keyboard.Keyboard;
@@ -19,10 +20,10 @@ import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
 import com.server.erentronic.item.keyboard.repository.SwitchRepository;
 import com.server.erentronic.item.keyboard.repository.VendorRepository;
-import com.server.erentronic.item.keyboard.type.Connection;
+import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
-import com.server.erentronic.item.keyboard.type.Vendor;
+import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,7 +62,8 @@ public class KeyboardService {
 		List<Long> switchIds = keyboardRequest.getSwitchIds();
 
 		Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(RuntimeException::new);
-		Connection connection = connectionRepository.findById(connectionId).orElseThrow(RuntimeException::new);
+		Connection connection = connectionRepository.findById(connectionId)
+			.orElseThrow(RuntimeException::new);
 		Layout layout = layoutRepository.findById(layoutId).orElseThrow(RuntimeException::new);
 
 		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, new ArrayList<>());
@@ -80,23 +82,25 @@ public class KeyboardService {
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
 		Keyboard keyboard = keyboardRepository.findById(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findInfoImagesByKeyboardId(id);
-		keyboardRepository.findSwitchesByKeyboardId(id);
-		keyboardRepository.findDiscountPoliciesByKeyboardId(id);
+		keyboardRepository.findInfoImagesByKeyboardId(id).orElseThrow(RuntimeException::new);
+		keyboardRepository.findSwitchesByKeyboardId(id).orElseThrow(RuntimeException::new);
+		keyboardRepository.findDiscountPoliciesByKeyboardId(id).orElseThrow(RuntimeException::new);
 
 		return KeyboardDetailResponse.from(keyboard);
 	}
 
 	public KeyboardFilterResponse getFilters() {
 
-		List<KeyboardVendorResponse> vendors = vendorRepository.findAll().stream()
-			.map(KeyboardVendorResponse::from)
-			.collect(Collectors.toList());
-		List<KeyboardConnectionResponse> connections = connectionRepository.findAll().stream()
-			.map(KeyboardConnectionResponse::from).collect(Collectors.toList());
+		List<KeyboardVendorResponse> vendors = vendorRepository.findAllByProductType(KEYBOARD)
+			.stream().map(KeyboardVendorResponse::from).collect(Collectors.toList());
+
+		List<KeyboardConnectionResponse> connections = connectionRepository.findAllByProductType(KEYBOARD)
+			.stream().map(KeyboardConnectionResponse::from).collect(Collectors.toList());
+
 		List<KeyboardSwitchResponse> switches = switchRepository.findAll().stream()
 			.map(KeyboardSwitchResponse::from)
 			.collect(Collectors.toList());
+
 		List<KeyboardLayoutResponse> layouts = layoutRepository.findAll().stream()
 			.map(KeyboardLayoutResponse::from)
 			.collect(Collectors.toList());

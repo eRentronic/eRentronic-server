@@ -20,9 +20,9 @@ import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
 import com.server.erentronic.item.keyboard.repository.SwitchRepository;
 import com.server.erentronic.item.keyboard.repository.VendorRepository;
-import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
+import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +69,7 @@ public class KeyboardService {
 		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, new ArrayList<>());
 		keyboardRepository.save(keyboard);
 
+		//todo save 이전에 아래 로직을 넣어서 tEntity 할 때 인자로 넣어서 만들도록 해도 될 듯?
 		List<Switch> switches = switchRepository.findAllById(switchIds);
 
 		List<KeyboardSwitch> keyboardSwitches = switches.stream()
@@ -81,6 +82,7 @@ public class KeyboardService {
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
+		// todo RuntimeException -> CustomException ex) Keyboard, xxImage, DiscountPolicy 각각
 		Keyboard keyboard = keyboardRepository.findById(id).orElseThrow(RuntimeException::new);
 		keyboardRepository.findInfoImagesByKeyboardId(id).orElseThrow(RuntimeException::new);
 		keyboardRepository.findSwitchesByKeyboardId(id).orElseThrow(RuntimeException::new);

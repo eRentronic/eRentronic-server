@@ -7,6 +7,7 @@ import com.server.erentronic.item.keyboard.dto.KeyboardFilterResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.service.KeyboardService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -35,8 +36,7 @@ public class KeyboardController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CreatedResponse postKeyboard(@RequestBody KeyboardRequest keyboardRequest) {
-		System.out.println(keyboardRequest);
+	public CreatedResponse postKeyboard(@RequestBody @Valid KeyboardRequest keyboardRequest) {
 		return keyboardService.postKeyboard(keyboardRequest);
 	}
 

@@ -4,11 +4,14 @@ import com.server.erentronic.common.image.Image;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.type.Layout;
+import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -66,12 +69,11 @@ public class KeyboardRequest {
 	@NotNull(message = "(키보드 배열) 필수 입력란 입니다.")
 	private Long layoutId;
 
-	public Keyboard toEntity(Vendor vendor, Connection connection, Layout layout,
-		List<KeyboardSwitch> keyboardSwitches) {
+	public Keyboard toEntity(Vendor vendor, Connection connection, Layout layout, List<Switch> switches) {
 
 		Keyboard keyboard = Keyboard.builder()
 			.layout(layout)
-			.keyboardSwitches(keyboardSwitches)
+			.keyboardSwitches(Collections.emptyList())
 			.build();
 
 		keyboard.setTitle(title);
@@ -91,6 +93,12 @@ public class KeyboardRequest {
 		productInfoImageUrls.forEach(infoImageUrl -> keyboard.getProductInfoImages().add(
 			ProductInfoImage.of(keyboard, Image.builder().imageUrl(infoImageUrl.getUrl()).build()))
 		);
+
+		List<KeyboardSwitch> keyboardSwitches = switches.stream()
+			.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
+			.collect(Collectors.toList());
+
+		keyboard.setKeyboardSwitches(keyboardSwitches);
 
 		return keyboard;
 	}

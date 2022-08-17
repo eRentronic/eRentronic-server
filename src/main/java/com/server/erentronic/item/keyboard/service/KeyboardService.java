@@ -5,7 +5,6 @@ import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CreatedResponse;
 import com.server.erentronic.item.keyboard.Keyboard;
-import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
@@ -24,7 +23,6 @@ import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -65,18 +63,11 @@ public class KeyboardService {
 		Connection connection = connectionRepository.findById(connectionId)
 			.orElseThrow(RuntimeException::new);
 		Layout layout = layoutRepository.findById(layoutId).orElseThrow(RuntimeException::new);
-
-		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, new ArrayList<>());
-		keyboardRepository.save(keyboard);
-
-		//todo save 이전에 아래 로직을 넣어서 tEntity 할 때 인자로 넣어서 만들도록 해도 될 듯?
 		List<Switch> switches = switchRepository.findAllById(switchIds);
 
-		List<KeyboardSwitch> keyboardSwitches = switches.stream()
-			.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
-			.collect(Collectors.toList());
+		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, switches);
 
-		keyboard.setKeyboardSwitches(keyboardSwitches);
+		keyboardRepository.save(keyboard);
 
 		return CreatedResponse.of(keyboard.getId(), PRODUCT_CREATED_MESSAGE.getMessage());
 	}

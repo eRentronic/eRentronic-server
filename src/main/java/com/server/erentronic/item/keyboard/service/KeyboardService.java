@@ -4,6 +4,8 @@ import static com.server.erentronic.common.message.Message.PRODUCT_CREATED_MESSA
 import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CreatedResponse;
+import com.server.erentronic.common.exception.NoSuchItemException;
+import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
@@ -59,10 +61,12 @@ public class KeyboardService {
 		Long layoutId = keyboardRequest.getLayoutId();
 		List<Long> switchIds = keyboardRequest.getSwitchIds();
 
-		Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(RuntimeException::new);
+		Vendor vendor = vendorRepository.findById(vendorId)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_VENDOR));
 		Connection connection = connectionRepository.findById(connectionId)
-			.orElseThrow(RuntimeException::new);
-		Layout layout = layoutRepository.findById(layoutId).orElseThrow(RuntimeException::new);
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_CONNECTION));
+		Layout layout = layoutRepository.findById(layoutId)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_LAYOUT));
 		List<Switch> switches = switchRepository.findAllById(switchIds);
 
 		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, switches);
@@ -73,11 +77,15 @@ public class KeyboardService {
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
-		// todo RuntimeException -> CustomException ex) Keyboard, xxImage, DiscountPolicy 각각
-		Keyboard keyboard = keyboardRepository.findById(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findInfoImagesByKeyboardId(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findSwitchesByKeyboardId(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findDiscountPoliciesByKeyboardId(id).orElseThrow(RuntimeException::new);
+		// todo RuntimeException -> CustomException ex) NoSuchElement
+		Keyboard keyboard = keyboardRepository.findById(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findInfoImagesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findSwitchesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findDiscountPoliciesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 		return KeyboardDetailResponse.from(keyboard);
 	}
@@ -87,7 +95,8 @@ public class KeyboardService {
 		List<KeyboardVendorResponse> vendors = vendorRepository.findAllByProductType(KEYBOARD)
 			.stream().map(KeyboardVendorResponse::from).collect(Collectors.toList());
 
-		List<KeyboardConnectionResponse> connections = connectionRepository.findAllByProductType(KEYBOARD)
+		List<KeyboardConnectionResponse> connections = connectionRepository.findAllByProductType(
+				KEYBOARD)
 			.stream().map(KeyboardConnectionResponse::from).collect(Collectors.toList());
 
 		List<KeyboardSwitchResponse> switches = switchRepository.findAll().stream()

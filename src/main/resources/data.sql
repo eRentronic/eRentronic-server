@@ -19,7 +19,7 @@ VALUES ('name', 'mock@mock.com', 1);
 INSERT INTO discount_policy(title, rate)
 VALUES ('이벤트 할인', 0.0225), ('신제품 할인', 0.10);
 
-INSERT INTO product(DTYPE, CONTENT,	PRICE, QUANTITY, RENTABLE, RENTAL_PRICE, RENTAL_PRODUCT_COUNT, TITLE, VIEW_COUNT, connection_id, vendor_id)
+INSERT INTO product(DTYPE, CONTENT,	PRICE, QUANTITY, RENTABLE, RENTAL_PRICE, RENTAL_PRODUCT_QUANTITY, TITLE, VIEW_COUNT, connection_id, vendor_id)
 VALUES ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙', 53500, 10, true, 5000, 5, 'HACKER K660', 1, 1, 1),
        ('Keyboard', '(정품)', 146900, 10, true, 5000, 5, 'MX_KEYS', 1, 1, 1),
        ('Keyboard', '무선 키보드 (정품) (적축)', 99000, 10, true, 5000, 5, 'SIGNATURE K855', 1, 1, 1),

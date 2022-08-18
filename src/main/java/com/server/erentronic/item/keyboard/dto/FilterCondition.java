@@ -16,6 +16,8 @@ public class FilterCondition {
 
 	private final List<Long> switchIds;
 
+	private final String keyword;
+
 	private final Boolean rentable;
 
 	private final Boolean purchasable;

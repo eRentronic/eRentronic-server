@@ -38,8 +38,8 @@ public interface KeyboardRepository extends JpaRepository<Keyboard, Long>, Keybo
 
 	// discountPolicy
 	@Query("select k from Keyboard k "
-		+ "join fetch k.discountPolicies dp "
-		+ "join fetch dp.discountPolicy "
+		+ "left join fetch k.discountPolicies dp "
+		+ "left join fetch dp.discountPolicy "
 		+ "where k.id = :keyboardId")
 	Optional<Keyboard> findDiscountPoliciesByKeyboardId(@Param("keyboardId") Long id);
 }

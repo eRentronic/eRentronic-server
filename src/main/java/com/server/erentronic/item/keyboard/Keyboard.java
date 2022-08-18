@@ -62,7 +62,7 @@ public class Keyboard extends Product {
 	}
 
 	public Integer getRentalProductCount() {
-		return super.rentalProductCount;
+		return super.rentalProductQuantity;
 	}
 
 	public Integer getQuantity() {
@@ -106,7 +106,7 @@ public class Keyboard extends Product {
 	}
 
 	public void setRentalProductCount(Integer rentalProductCount) {
-		super.rentalProductCount = rentalProductCount;
+		super.rentalProductQuantity = rentalProductCount;
 	}
 
 	public void setQuantity(Integer quantity) {

@@ -4,6 +4,8 @@ import static com.server.erentronic.common.message.Message.PRODUCT_CREATED_MESSA
 import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CreatedResponse;
+import com.server.erentronic.common.exception.NoSuchItemException;
+import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.dto.DeletedResponse;
@@ -25,7 +27,6 @@ import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -62,32 +63,31 @@ public class KeyboardService {
 		Long layoutId = keyboardRequest.getLayoutId();
 		List<Long> switchIds = keyboardRequest.getSwitchIds();
 
-		Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(RuntimeException::new);
+		Vendor vendor = vendorRepository.findById(vendorId)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_VENDOR));
 		Connection connection = connectionRepository.findById(connectionId)
-			.orElseThrow(RuntimeException::new);
-		Layout layout = layoutRepository.findById(layoutId).orElseThrow(RuntimeException::new);
-
-		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, new ArrayList<>());
-		keyboardRepository.save(keyboard);
-
-		//todo save 이전에 아래 로직을 넣어서 tEntity 할 때 인자로 넣어서 만들도록 해도 될 듯?
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_CONNECTION));
+		Layout layout = layoutRepository.findById(layoutId)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_LAYOUT));
 		List<Switch> switches = switchRepository.findAllById(switchIds);
 
-		List<KeyboardSwitch> keyboardSwitches = switches.stream()
-			.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
-			.collect(Collectors.toList());
+		Keyboard keyboard = keyboardRequest.toEntity(vendor, connection, layout, switches);
 
-		keyboard.setKeyboardSwitches(keyboardSwitches);
+		keyboardRepository.save(keyboard);
 
 		return CreatedResponse.of(keyboard.getId(), PRODUCT_CREATED_MESSAGE.getMessage());
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
-		// todo RuntimeException -> CustomException ex) Keyboard, xxImage, DiscountPolicy 각각
-		Keyboard keyboard = keyboardRepository.findById(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findInfoImagesByKeyboardId(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findSwitchesByKeyboardId(id).orElseThrow(RuntimeException::new);
-		keyboardRepository.findDiscountPoliciesByKeyboardId(id).orElseThrow(RuntimeException::new);
+		// todo RuntimeException -> CustomException ex) NoSuchElement
+		Keyboard keyboard = keyboardRepository.findById(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findInfoImagesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findSwitchesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboardRepository.findDiscountPoliciesByKeyboardId(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 		return KeyboardDetailResponse.from(keyboard);
 	}
@@ -103,7 +103,8 @@ public class KeyboardService {
 		List<KeyboardVendorResponse> vendors = vendorRepository.findAllByProductType(KEYBOARD)
 			.stream().map(KeyboardVendorResponse::from).collect(Collectors.toList());
 
-		List<KeyboardConnectionResponse> connections = connectionRepository.findAllByProductType(KEYBOARD)
+		List<KeyboardConnectionResponse> connections = connectionRepository.findAllByProductType(
+				KEYBOARD)
 			.stream().map(KeyboardConnectionResponse::from).collect(Collectors.toList());
 
 		List<KeyboardSwitchResponse> switches = switchRepository.findAll().stream()

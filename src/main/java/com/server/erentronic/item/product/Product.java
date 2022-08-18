@@ -46,7 +46,7 @@ public abstract class Product {
 
 	protected Boolean rentable;
 
-	protected Integer rentalProductCount;
+	protected Integer rentalProductQuantity;
 
 	protected Integer quantity;
 
@@ -73,14 +73,14 @@ public abstract class Product {
 	protected final List<ProductLike> productLikes = new ArrayList<>();
 
 	protected Product(String title, String content, Integer price, Integer rentalPrice,
-		Boolean rentable, Integer rentalProductCount, Integer quantity, Integer viewCount, Vendor vendor) {
+		Boolean rentable, Integer rentalProductQuantity, Integer quantity, Integer viewCount, Vendor vendor) {
 
 		this.title = title;
 		this.content = content;
 		this.price = price;
 		this.rentalPrice = rentalPrice;
 		this.rentable = rentable;
-		this.rentalProductCount = rentalProductCount;
+		this.rentalProductQuantity = rentalProductQuantity;
 		this.quantity = quantity;
 		this.viewCount = viewCount;
 		this.vendor = vendor;

@@ -41,6 +41,7 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 				isPurchasable(condition.getPurchasable()),
 				isLike(condition.getKeyword())
 			)
+			.orderBy(keyboard.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize() + 1L)
 			.fetch();

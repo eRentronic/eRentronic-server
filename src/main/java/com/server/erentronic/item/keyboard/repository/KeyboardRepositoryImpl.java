@@ -38,7 +38,8 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 				inConditionsWith(keyboard.vendor.id, condition.getVendorIds()),
 				eqAnySwitchIds(condition.getSwitchIds(), subKeyboardSwitch),
 				isRentable(condition.getRentable()),
-				isPurchasable(condition.getPurchasable())
+				isPurchasable(condition.getPurchasable()),
+				isLike(condition.getKeyword())
 			)
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize() + 1L)
@@ -57,7 +58,7 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 		if (switchIds == null) {
 			return null;
 		}
-		
+
 		return keyboardSwitch.eqAny(
 			JPAExpressions.selectFrom(subKeyboardSwitch)
 				.where(inConditionsWith(subKeyboardSwitch.aSwitch.id, switchIds)));
@@ -84,5 +85,13 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 		}
 
 		return keyboard.quantity.goe(1);
+	}
+
+	private BooleanExpression isLike(String keyword) {
+		if (keyword == null) {
+			return null;
+		}
+
+		return keyboard.title.contains(keyword).or(keyboard.content.contains(keyword));
 	}
 }

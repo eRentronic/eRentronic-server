@@ -19,7 +19,11 @@ public class ProductResponse {
 
 	private final Integer price;
 
+	private final Integer quantity;
+
 	private final Integer rentalPrice;
+
+	private final Integer rentalProductQuantity;
 
 	private final Boolean rentable;
 
@@ -33,7 +37,10 @@ public class ProductResponse {
 			product.getTitle(),
 			product.getContent(),
 			product.getProductImages().get(0).getImage().getImageUrl(),
-			product.getPrice(), product.getRentalPrice(),
+			product.getPrice(),
+			product.getQuantity(),
+			product.getRentalPrice(),
+			product.getRentalProductQuantity(),
 			product.getRentable(),
 			false,
 			false

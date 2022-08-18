@@ -7,6 +7,8 @@ import com.server.erentronic.common.dto.CreatedResponse;
 import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
+import com.server.erentronic.item.keyboard.KeyboardSwitch;
+import com.server.erentronic.item.keyboard.dto.DeletedResponse;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
@@ -88,6 +90,12 @@ public class KeyboardService {
 			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 		return KeyboardDetailResponse.from(keyboard);
+	}
+
+	@Transactional
+	public DeletedResponse deleteKeyboard(Long id) {
+		keyboardRepository.deleteById(id);
+		return DeletedResponse.from(id);
 	}
 
 	public KeyboardFilterResponse getFilters() {

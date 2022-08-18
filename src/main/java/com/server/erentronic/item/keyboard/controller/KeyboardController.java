@@ -1,6 +1,7 @@
 package com.server.erentronic.item.keyboard.controller;
 
 import com.server.erentronic.common.dto.CreatedResponse;
+import com.server.erentronic.item.keyboard.dto.DeletedResponse;
 import com.server.erentronic.item.keyboard.dto.FilterCondition;
 import com.server.erentronic.item.keyboard.dto.KeyboardDetailResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardFilterResponse;
@@ -8,11 +9,13 @@ import com.server.erentronic.item.keyboard.dto.KeyboardRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.service.KeyboardService;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,7 @@ public class KeyboardController {
 
 	@GetMapping
 	public Slice<KeyboardSimpleResponse> getKeyboardCards(
-		@PageableDefault(size = 9) Pageable pageable, FilterCondition filterCondition) {
+		@PageableDefault(size = 9) Pageable pageable, @Valid FilterCondition filterCondition) {
 		return keyboardService.getKeyboardCards(pageable, filterCondition);
 	}
 
@@ -41,8 +44,13 @@ public class KeyboardController {
 	}
 
 	@GetMapping("/{id}")
-	public KeyboardDetailResponse getKeyboardDetail(@PathVariable Long id) {
+	public KeyboardDetailResponse getKeyboardDetail(@PathVariable @Positive Long id) {
 		return keyboardService.getKeyboardDetail(id);
+	}
+
+	@DeleteMapping("/{id}")
+	public DeletedResponse deleteKeyboard(@PathVariable @Positive Long id) {
+		return keyboardService.deleteKeyboard(id);
 	}
 
 	@GetMapping("/filters")

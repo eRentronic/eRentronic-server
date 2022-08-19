@@ -9,60 +9,59 @@ import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.type.Connection;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class KeyboardUpdateRequest {
 
-	@NotBlank(message = "(키보드 상품 명) 필수 입력란 입니다.")
+	@Nullable
 	private String title;
 
-	@NotBlank(message = "(키보드 상품 스펙) 필수 입력란 입니다.")
+	@Nullable
 	private String content;
 
-	@NotNull(message = "(키보드 상품 가격) 필수 입력란 입니다.")
+	@Nullable
 	private Integer price;
 
-	@NotNull(message = "(키보드 렌탈 가격) 필수 입력란 입니다.")
+	@Nullable
 	private Integer rentalPrice;
 
-	@NotNull(message = "(키보드 렌탈가능 여부) 필수 입력란 입니다.")
+	@Nullable
 	private Boolean rentable;
 
-	@NotNull(message = "(렌탈 가능한 키보드 수) 필수 입력란 입니다.")
+	@Nullable
 	private Integer rentalProductCount;
 
-	@NotNull(message = "(판매할 키보드 수) 필수 입력란 입니다.")
-	@Positive
+	@Nullable
+	@PositiveOrZero
 	private Integer quantity;
 
-	@NotEmpty(message = "(키보드 이미지) 필수 입력란 입니다.")
+	@Nullable
 	@Valid
 	private List<URLRequest> productImageUrls;
 
-	@NotEmpty(message = "(키보드 상세 이미지) 필수 입력란 입니다.")
+	@Nullable
 	@Valid
 	private List<URLRequest> productInfoImageUrls;
 
-	@NotNull(message = "(연결 방식) 필수 입력란 입니다.")
+	@Nullable
 	private Long connectionId;
 
-	@NotNull(message = "(키 축) 필수 입력란 입니다.")
+	@Nullable
 	private List<Long> switchIds;
 
-	@NotNull(message = "(키보드 배열) 필수 입력란 입니다.")
+	@Nullable
 	private Long layoutId;
 
-	public Keyboard toEntity(Connection connection, Layout layout, List<KeyboardSwitch> keyboardSwitches) {
+	public Keyboard convertToInstance(Connection connection, Layout layout, List<KeyboardSwitch> keyboardSwitches) {
 
 		Keyboard keyboard = Keyboard.builder().build();
+		keyboard.changeConnection(connection);
 		keyboard.changeLayout(layout);
 		keyboard.changeKeyboardSwitches(keyboardSwitches);
 		keyboard.modifyTitle(title);
@@ -72,19 +71,6 @@ public class KeyboardUpdateRequest {
 		keyboard.changeRentable(rentable);
 		keyboard.updateRentalProductCount(rentalProductCount);
 		keyboard.updateQuantity(quantity);
-
-		if (productImageUrls != null) {
-			productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
-				ProductImage.of(keyboard,
-					Image.builder().imageUrl(imageUrl.getUrl()).build()))
-			);
-		}
-		if (productInfoImageUrls != null) {
-			productInfoImageUrls.forEach(infoImageUrl -> keyboard.getProductInfoImages().add(
-				ProductInfoImage.of(keyboard,
-					Image.builder().imageUrl(infoImageUrl.getUrl()).build()))
-			);
-		}
 
 		return keyboard;
 	}

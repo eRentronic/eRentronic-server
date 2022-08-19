@@ -7,6 +7,7 @@ import static com.server.erentronic.item.product.type.ProductType.KEYBOARD;
 
 import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.NoSuchItemException;
+import com.server.erentronic.common.image.Image;
 import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
@@ -20,6 +21,7 @@ import com.server.erentronic.item.keyboard.dto.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardSwitchResponse;
 import com.server.erentronic.item.keyboard.dto.KeyboardUpdateRequest;
 import com.server.erentronic.item.keyboard.dto.KeyboardVendorResponse;
+import com.server.erentronic.item.keyboard.dto.URLRequest;
 import com.server.erentronic.item.keyboard.repository.ConnectionRepository;
 import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
@@ -27,6 +29,8 @@ import com.server.erentronic.item.keyboard.repository.SwitchRepository;
 import com.server.erentronic.item.keyboard.repository.VendorRepository;
 import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
+import com.server.erentronic.item.product.ProductImage;
+import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.List;
@@ -108,10 +112,25 @@ public class KeyboardService {
 				.collect(Collectors.toList());
 		}
 
-		// Keyboard update 메서드에서 TODO 이미지를 변경할 때 기존에 등록되었던 이미지들을 어떻게 처리할지?
-		keyboard.update(keyboardUpdateRequest.toEntity(connection, layout, switches));
-//		keyboardUpdateRequest.getProductImageUrls();
-//		keyboardUpdateRequest.getProductInfoImageUrls();
+		keyboard.update(keyboardUpdateRequest.convertToInstance(connection, layout, switches));
+
+		//todo Keyboard update 메서드에서 이미지를 변경할 때 기존에 등록되었던 이미지들을 어떻게 처리할지?
+		// 현재는 기존 이미지에 이미지들을 추가하고 있음
+		List<URLRequest> productImageUrls = keyboardUpdateRequest.getProductImageUrls();
+		if (productImageUrls != null) {
+			productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
+				ProductImage.of(keyboard,
+					Image.builder().imageUrl(imageUrl.getUrl()).build()))
+			);
+		}
+
+		List<URLRequest> productInfoImageUrls = keyboardUpdateRequest.getProductInfoImageUrls();
+		if (productInfoImageUrls != null) {
+			productInfoImageUrls.forEach(infoImageUrl -> keyboard.getProductInfoImages().add(
+				ProductInfoImage.of(keyboard,
+					Image.builder().imageUrl(infoImageUrl.getUrl()).build()))
+			);
+		}
 
 		return CUDResponse.of(keyboard.getId(), PRODUCT_PATCHED_MESSAGE);
 	}

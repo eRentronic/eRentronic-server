@@ -37,7 +37,9 @@ public class Keyboard extends Product {
 	@Builder
 	private Keyboard(Layout layout, List<KeyboardSwitch> keyboardSwitches) {
 		this.layout = layout;
-		this.keyboardSwitches.addAll(keyboardSwitches);
+		if (keyboardSwitches != null) {
+			this.keyboardSwitches.addAll(keyboardSwitches);
+		}
 	}
 
 	public Long getId() {
@@ -121,18 +123,24 @@ public class Keyboard extends Product {
 	}
 
 	public void changeKeyboardSwitches(List<KeyboardSwitch> keyboardSwitches) {
-		this.keyboardSwitches.clear();
-		this.keyboardSwitches.addAll(keyboardSwitches);
+		if (keyboardSwitches != null) {
+			this.keyboardSwitches.clear();
+			this.keyboardSwitches.addAll(keyboardSwitches);
+		}
 	}
 
 	public void changeProductImages(List<ProductImage> productImages) {
-		this.productImages.clear();
-		this.productImages.addAll(productImages);
+		if (productImages != null) {
+			this.productImages.clear();
+			this.productImages.addAll(productImages);
+		}
 	}
 
 	public void changeProductInfoImages(List<ProductInfoImage> productInfoImages) {
-		this.productInfoImages.clear();
-		this.productInfoImages.addAll(productInfoImages);
+		if (productInfoImages != null) {
+			this.productInfoImages.clear();
+			this.productInfoImages.addAll(productInfoImages);
+		}
 	}
 
 	public void changeLayout(Layout layout) {
@@ -175,6 +183,10 @@ public class Keyboard extends Product {
 
 		if (updatedKeyboard.getRentalProductCount() != null) {
 			updateRentalProductCount(updatedKeyboard.getRentalProductCount());
+		}
+
+		if (updatedKeyboard.getConnection() != null) {
+			changeConnection(updatedKeyboard.getConnection());
 		}
 
 		if (updatedKeyboard.getLayout() != null) {

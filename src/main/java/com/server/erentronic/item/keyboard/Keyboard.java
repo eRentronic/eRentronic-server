@@ -27,7 +27,7 @@ import org.apache.logging.log4j.util.Strings;
 @Getter
 public class Keyboard extends Product {
 
-	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE })
+	@OneToMany(mappedBy = "keyboard", fetch = FetchType.LAZY, cascade = { PERSIST, REMOVE }, orphanRemoval = true)
 	private final List<KeyboardSwitch> keyboardSwitches = new ArrayList<>();
 
 	@JoinColumn

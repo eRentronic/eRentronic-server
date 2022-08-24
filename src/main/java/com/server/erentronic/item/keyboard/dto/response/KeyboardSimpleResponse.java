@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.dto;
+package com.server.erentronic.item.keyboard.dto.response;
 
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.product.dto.DiscountInfoResponse;

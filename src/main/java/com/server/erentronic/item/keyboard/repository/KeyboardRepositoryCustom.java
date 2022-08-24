@@ -1,7 +1,7 @@
 package com.server.erentronic.item.keyboard.repository;
 
 import com.server.erentronic.item.keyboard.Keyboard;
-import com.server.erentronic.item.keyboard.dto.FilterCondition;
+import com.server.erentronic.item.keyboard.dto.request.FilterCondition;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

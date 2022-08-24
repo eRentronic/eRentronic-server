@@ -1,11 +1,8 @@
-package com.server.erentronic.item.keyboard.dto;
+package com.server.erentronic.item.keyboard.dto.request;
 
-import com.server.erentronic.common.image.Image;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.type.Layout;
-import com.server.erentronic.item.product.ProductImage;
-import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.type.Connection;
 import java.util.List;
 import javax.validation.Valid;

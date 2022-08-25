@@ -33,8 +33,7 @@ public class OrderSheet {
 	@OneToOne
 	private Member member;
 
-	@JoinColumn
-	@OneToOne
+	@Embedded
 	private Address address;
 
 	private Integer totalPrice;

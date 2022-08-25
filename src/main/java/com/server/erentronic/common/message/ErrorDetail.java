@@ -7,7 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum ErrorDetail {
+
 	INVALID_INPUT_VALUE("입력 값이 올바르지 않습니다.", 400),
+
+	NOT_EQUALS_REAL_PRICE("주문한 해당 상품에 대한 총 가격이 일치하지 않습니다.", 400),
+	NOT_EQUALS_REAL_TOTAL_PRICE("주문한 모든 상품에 대한 총 가격이 일치하지 않습니다.", 400),
 
 	NO_SUCH_PRODUCT("해당 상품이 존재하지 않습니다.", 400),
 	NO_SUCH_VENDOR("해당 공급사가 존재하지 않습니다.", 400),

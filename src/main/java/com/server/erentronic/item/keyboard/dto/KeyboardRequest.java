@@ -20,11 +20,9 @@ import javax.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@ToString
 public class KeyboardRequest {
 
 	@NotBlank(message = "(키보드 상품 명) 필수 입력란 입니다.")
@@ -76,16 +74,16 @@ public class KeyboardRequest {
 			.keyboardSwitches(Collections.emptyList())
 			.build();
 
-		keyboard.setTitle(title);
-		keyboard.setContent(content);
-		keyboard.setPrice(price);
-		keyboard.setRentalPrice(rentalPrice);
-		keyboard.setRentable(rentable);
-		keyboard.setRentalProductCount(rentalProductCount);
-		keyboard.setQuantity(quantity);
-		keyboard.setViewCount(1);
+		keyboard.modifyTitle(title);
+		keyboard.modifyContent(content);
+		keyboard.updatePrice(price);
+		keyboard.updateRentalPrice(rentalPrice);
+		keyboard.changeRentable(rentable);
+		keyboard.updateRentalProductCount(rentalProductCount);
+		keyboard.updateQuantity(quantity);
+		keyboard.updateViewCount(1);
 		keyboard.setVendor(vendor);
-		keyboard.setConnection(connection);
+		keyboard.changeConnection(connection);
 
 		productImageUrls.forEach(imageUrl -> keyboard.getProductImages().add(
 			ProductImage.of(keyboard, Image.builder().imageUrl(imageUrl.getUrl()).build()))
@@ -98,7 +96,7 @@ public class KeyboardRequest {
 			.map(aSwitch -> KeyboardSwitch.of(keyboard, aSwitch))
 			.collect(Collectors.toList());
 
-		keyboard.setKeyboardSwitches(keyboardSwitches);
+		keyboard.changeKeyboardSwitches(keyboardSwitches);
 
 		return keyboard;
 	}

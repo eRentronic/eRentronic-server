@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum Message {
 
+	ORDER_SUCCESS_MESSAGE("주문이 완료되었습니다."),
+
 	PRODUCT_CREATED_MESSAGE("상품이 등록되었습니다."),
 	PRODUCT_DELETED_MESSAGE("상품이 삭제되었습니다."),
 	PRODUCT_PATCHED_MESSAGE("상품이 수정되었습니다.");

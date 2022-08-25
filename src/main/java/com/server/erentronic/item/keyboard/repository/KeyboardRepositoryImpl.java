@@ -9,7 +9,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.QKeyboardSwitch;
-import com.server.erentronic.item.keyboard.dto.FilterCondition;
+import com.server.erentronic.item.keyboard.dto.request.FilterCondition;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

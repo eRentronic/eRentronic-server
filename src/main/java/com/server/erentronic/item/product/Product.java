@@ -3,6 +3,8 @@ package com.server.erentronic.item.product;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 
+import com.server.erentronic.common.exception.NoStockException;
+import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
@@ -84,5 +86,12 @@ public abstract class Product {
 		this.quantity = quantity;
 		this.viewCount = viewCount;
 		this.vendor = vendor;
+	}
+
+	public void decreaseQuantity(Integer orderedQuantity) {
+		if (this.quantity < orderedQuantity) {
+			throw new NoStockException(ErrorDetail.NO_STOCK_PRODUCT);
+		}
+		this.quantity -= orderedQuantity;
 	}
 }

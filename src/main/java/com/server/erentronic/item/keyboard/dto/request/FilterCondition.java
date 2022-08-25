@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.dto;
+package com.server.erentronic.item.keyboard.dto.request;
 
 import java.util.List;
 import lombok.Getter;

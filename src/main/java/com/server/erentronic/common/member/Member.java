@@ -1,6 +1,8 @@
 package com.server.erentronic.common.member;
 
 import com.server.erentronic.common.address.Address;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Member {
 
 	@Id
@@ -25,7 +29,6 @@ public class Member {
 	@Email
 	private String email;
 
-	@JoinColumn
-	@OneToOne(fetch = FetchType.LAZY)
+	@Embedded
 	private Address address;
 }

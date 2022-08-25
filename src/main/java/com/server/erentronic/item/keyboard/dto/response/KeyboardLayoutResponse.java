@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.dto;
+package com.server.erentronic.item.keyboard.dto.response;
 
 import com.server.erentronic.item.keyboard.type.Layout;
 import lombok.AccessLevel;

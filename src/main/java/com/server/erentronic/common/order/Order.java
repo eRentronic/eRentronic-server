@@ -24,17 +24,21 @@ public abstract class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)
-	private OrderSheet orderSheet;
+	protected OrderSheet orderSheet;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Product product;
+	protected Product product;
 
-	private Integer quantity;
+	protected Integer quantity;
 
-	private Integer price;
+	protected Integer price;
+
+	public void assignOrderSheet(OrderSheet orderSheet) {
+		this.orderSheet = orderSheet;
+	}
 }

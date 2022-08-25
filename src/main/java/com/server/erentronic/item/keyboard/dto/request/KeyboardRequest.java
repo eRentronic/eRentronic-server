@@ -1,4 +1,4 @@
-package com.server.erentronic.item.keyboard.dto;
+package com.server.erentronic.item.keyboard.dto.request;
 
 import com.server.erentronic.common.image.Image;
 import com.server.erentronic.item.keyboard.Keyboard;

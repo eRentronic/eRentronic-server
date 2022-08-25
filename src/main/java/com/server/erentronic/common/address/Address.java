@@ -1,27 +1,22 @@
 package com.server.erentronic.common.address;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Entity
+@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Getter
 public class Address {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(unique = true)
 	private String fullAddress;
 
-	private String city;
+	private String address1;
 
-	private String street;
+	private String address2;
 
 	private String zipCode;
 }

@@ -10,11 +10,8 @@ VALUES ('KEYBOARD', 'CABLE'), ('KEYBOARD', 'WIRELESS'), ('KEYBOARD', 'BLUETOOTH'
 INSERT INTO switch(switch_type)
 VALUES ('BLUE'), ('BROWN'), ('RED'), ('BLACK'), ('SILENCE_RED');
 
-INSERT INTO address(full_address, city, street, zip_code)
-VALUES ('서울특별시 서초구, 양재동 137-130', '서울특별시', '서초구, 양재동', '137-130');
-
-INSERT INTO member(name, email, address_id)
-VALUES ('name', 'mock@mock.com', 1);
+INSERT INTO member(name, email, full_address, address1, address2, zip_code)
+VALUES ('name', 'mock@mock.com', '서울 송파구 송파대로 567 101동 101호', '서울 송파구 송파대로 567', '101동 101호', '05503');
 
 INSERT INTO discount_policy(title, rate)
 VALUES ('이벤트 할인', 0.0225), ('신제품 할인', 0.10);

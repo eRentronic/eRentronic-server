@@ -12,7 +12,9 @@ public enum VendorType {
 	COX("콕스"),
 	LEOPLOD("레오폴드"),
 	HAPPYHACKING("해피해킹"),
-	REALFORCE("리얼포스");
+	REALFORCE("리얼포스"),
+	MSI("MSI"),
+	XENICS("제닉스");
 	
 	private final String name;
 }

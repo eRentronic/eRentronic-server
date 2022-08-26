@@ -1,6 +1,5 @@
 package com.server.erentronic.item.product;
 
-import com.server.erentronic.item.keyboard.Keyboard;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,20 +10,40 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RentalKeyboardProduct {
+public class ProductRentalUnit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private String serialNumber;
 
 	@Enumerated(EnumType.STRING)
 	private RentalUnitState state;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Keyboard keyboard;
+	private Product product;
+
+	@Builder
+	public ProductRentalUnit(Long id, String serialNumber, RentalUnitState state, Product product) {
+		this.id = id;
+		this.serialNumber = serialNumber;
+		this.state = state;
+		this.product = product;
+	}
+
+	public static ProductRentalUnit of(String serialNumber, RentalUnitState state, Product product) {
+
+		return ProductRentalUnit.builder()
+			.serialNumber(serialNumber)
+			.state(state)
+			.product(product)
+			.build();
+	}
 }

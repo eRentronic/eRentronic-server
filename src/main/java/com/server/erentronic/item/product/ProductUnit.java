@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class KeyboardProduct {
+public class ProductUnit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	private KeyboardState state;
+	private UnitState state;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn

@@ -22,7 +22,7 @@ public class RentalKeyboardProduct {
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	private RentalKeyboardState state;
+	private RentalUnitState state;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)

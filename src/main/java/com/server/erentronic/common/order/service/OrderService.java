@@ -13,7 +13,10 @@ import com.server.erentronic.common.order.dto.OrderSheetRequest;
 import com.server.erentronic.common.order.purchace.Purchase;
 import com.server.erentronic.common.order.repository.OrderSheetRepository;
 import com.server.erentronic.item.product.Product;
+import com.server.erentronic.item.product.ProductUnit;
+import com.server.erentronic.item.product.UnitState;
 import com.server.erentronic.item.product.repository.ProductRepository;
+import com.server.erentronic.item.product.repository.ProductUnitRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class OrderService {
 
 	private final OrderSheetRepository orderSheetRepository;
 	private final ProductRepository productRepository;
+	private final ProductUnitRepository productUnitRepository;
 	private final MemberRepository memberRepository;
 
 	@Transactional
@@ -45,8 +49,16 @@ public class OrderService {
 			Product product = productRepository.findById(orderRequest.getProductId())
 				.orElseThrow(RuntimeException::new);
 
-			purchases.add(Purchase.makePurchase(product, orderRequest.getQuantity(),
-				orderRequest.getProductTotalPrice()));
+			Purchase purchase = Purchase.makePurchase(product, orderRequest.getQuantity(),
+				orderRequest.getProductTotalPrice());
+
+			List<ProductUnit> units = productUnitRepository.findAllByProductAndState(product, UnitState.SALE)
+				.subList(0, orderRequest.getQuantity());
+
+			units.forEach(productUnit -> productUnit.changeState(UnitState.SOLD_OUT));
+			purchase.assignUnits(units);
+
+			purchases.add(purchase);
 
 			totalPrice += product.getPrice() * orderRequest.getQuantity();
 		}

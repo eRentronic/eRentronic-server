@@ -5,6 +5,7 @@ import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.common.order.Order;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductUnit;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Purchase extends Order {
 
 	@OneToMany
-	private List<ProductUnit> units;
+	private List<ProductUnit> units = new ArrayList<>();
 
 	public static Purchase makePurchase(Product product, Integer orderQuantity, Integer orderPrice) {
 
@@ -32,5 +33,9 @@ public class Purchase extends Order {
 		purchase.price = orderPrice;
 
 		return purchase;
+	}
+
+	public void assignUnits(List<ProductUnit> units) {
+		this.units.addAll(units);
 	}
 }

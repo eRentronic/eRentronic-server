@@ -46,4 +46,8 @@ public class ProductUnit {
 			.product(product)
 			.build();
 	}
+
+	public void changeState(UnitState state) {
+		this.state = state;
+	}
 }

@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.QKeyboardSwitch;
 import com.server.erentronic.item.keyboard.dto.request.FilterCondition;
+import com.server.erentronic.item.product.ProductState;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,8 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 				eqAnySwitchIds(condition.getSwitchIds(), subKeyboardSwitch),
 				isRentable(condition.getRentable()),
 				isPurchasable(condition.getPurchasable()),
-				isLike(condition.getKeyword())
+				isLike(condition.getKeyword()),
+				isCommercial(ProductState.COMMERCIAL)
 			)
 			.orderBy(keyboard.id.desc())
 			.offset(pageable.getOffset())
@@ -94,5 +96,13 @@ public class KeyboardRepositoryImpl implements KeyboardRepositoryCustom {
 		}
 
 		return keyboard.title.contains(keyword).or(keyboard.content.contains(keyword));
+	}
+
+	private BooleanExpression isCommercial(ProductState state) {
+		if (state == null) {
+			return null;
+		}
+
+		return keyboard.state.eq(state);
 	}
 }

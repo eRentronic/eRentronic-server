@@ -7,6 +7,7 @@ import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
+import com.server.erentronic.item.product.ProductState;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;
@@ -78,6 +79,10 @@ public class Keyboard extends Product {
 		return super.viewCount;
 	}
 
+	public ProductState getProductState() {
+		return super.state;
+	}
+
 	public Vendor getVendor() {
 		return super.vendor;
 	}
@@ -120,6 +125,10 @@ public class Keyboard extends Product {
 
 	public void updateViewCount(Integer viewCount) {
 		super.viewCount = viewCount;
+	}
+
+	public void changeProductState(ProductState state) {
+		super.state = state;
 	}
 
 	public void changeKeyboardSwitches(List<KeyboardSwitch> keyboardSwitches) {

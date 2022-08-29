@@ -35,37 +35,37 @@ VALUES ('이벤트 할인', 0.0225),
        ('신제품 할인', 0.10);
 
 INSERT INTO product(DTYPE, CONTENT, PRICE, QUANTITY, RENTABLE, RENTAL_PRICE,
-                    RENTAL_PRODUCT_QUANTITY, TITLE, VIEW_COUNT, connection_id, vendor_id)
-VALUES ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙', 53500, 16, true, 5000, 7, 'HACKER K660', 1, 1, 2),
-       ('Keyboard', '(정품) 컨텐츠 상세 긴 목 데이터 A occaecati tempora beatae optio nihil. Est sapiente doloribus assumenda eaque ipsa autem. Est facilis quibusdam consectetur occaecati occaecati. Nam in adipisci fuga eum debitis.', 146900, 8, true, 5000, 6, 'MX_KEYS', 1, 1, 1),
-       ('Keyboard', '무선 키보드 (정품) (적축)', 99000, 4, true, 5000, 2, 'SIGNATURE K855', 1, 1, 1),
-       ('Keyboard', '(정품)', 97900, 16, true, 4000, 6, 'MK850', 1, 1, 1),
-       ('Keyboard', '(정품) 목 데이터 긴 거 A occaecati tempora beatae optio nihil. Est sapiente doloribus assumenda eaque ipsa autem. Est facilis quibusdam consectetur occaecati occaecati. Nam in adipisci fuga eum debitis.', 62950, 8, true, 5000, 6, 'MK545', 1, 1, 1),
-       ('Keyboard', 'OfficeMaster 한글', 159000, 8, true, 5000, 8, 'GK898B', 1, 1, 1),
-       ('Keyboard', '그라파이트 화이트 한글', 166400, 13, true, 5000, 8, 'FC900RBT PD', 1, 1, 4),
-       ('Keyboard', '화이트투톤 한글 ', 166970, 11, true, 5000, 5, 'NP900RBT PD', 1, 1, 1),
-       ('Keyboard', '이색사출 PBT 체리 키보드 미드나잇그린', 75000, 9, true, 5000, 7, 'HACKER K660M', 1, 1, 1),
-       ('Keyboard', '(정품)', 249000, 15, true, 5000, 3, 'G913 TKL', 1, 1, 1),
-       ('Keyboard', '화이트 블루스타 한글', 164320, 8, true, 5000, 3, 'FC750RBT PD', 1, 1, 4),
-       ('Keyboard', '축교환 게이밍 기계식 블랙 (청축)', 33500, 13, true, 4000, 5, 'HACKER K640', 1, 1, 2),  --12
-       ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙 (클릭)', 53500, 11, true, 5000, 1, 'HACKER K660', 1, 1, 2),                                                                                    --13
-       ('Keyboard', '코랄블루 영문 (저소음 적축)', 189000, 10, true, 10000, 3, 'FC750RBT PD', 1, 1, 4),   --14
-       ('Keyboard', '그라파이트 화이트 한글 (저소음 적축)', 169150, 8, true, 3000, 9, 'FC900RBT PD', 1, 1, 4),                                                                                    --15
-       ('Keyboard', '화이트민트 한글 (저소음적축)', 174990, 7, true, 6000, 5, 'FC900RBT PD', 1, 1, 4),    --16
-       ('Keyboard', '이색사출 그레이 블루 한글 (저소음 적축)', 141040, 9, true, 7500, 3, 'FC900R PD', 1, 1, 4),                                                                                    --17
-       ('Keyboard', '(청축)', 56900, 6, true, 4000, 4, 'STORMX K5', 1, 1, 4),                   --18
-       ('Keyboard', '차콜 블루 한글 (저소음 적축)', 169620, 5, true, 4000, 5, 'FC900RBT PD', 1, 1, 4),   --19
-       ('Keyboard', '기계식 키보드 (청축)', 75800, 6, true, 6000, 7, 'STORMX TITAN MARK V', 1, 1, 4), --20
-       ('Keyboard', '코랄블루 영문 (저소음 적축)', 187490, 9, true, 3500, 2, 'FC750RBT PD', 1, 1, 4),    --21
-       ('Keyboard', '(화이트, 청축)', 105000, 11, true, 4500, 5, 'SCORPIUS M10TSFL', 1, 1, 4),      --22
-       ('Keyboard', '스카이문 LED 완전방수 무접점 (45g)', 190000, 6, true, 4500, 6, 'HACKER K990 V3', 1, 1, 2),                                                                                    --23
-       ('Keyboard', '(청축)', 132000, 15, true, 6000, 2, 'TESORO M9 SPECTRUM', 1, 1, 4),         --24
-       ('Keyboard', '무선 블루투스 기계식 미니 키보드 (블랙)', 165000, 8, true, 8000, 7, 'K660M-L68', 1, 1, 2),                                                                                    --25
-       ('Keyboard', '그레이퍼플 한글 (청축)', 164900, 10, true, 10000, 6, 'FC900RBT PD', 1, 1, 4),      --26
-       ('Keyboard', '무접점 키보드 (그레이, 30g)', 199000, 12, true, 4500, 4, 'KN10C PBT', 1, 1, 2),    --27
-       ('Keyboard', '(화이트)', 27850, 13, true, 3000, 3, 'STORMX TITAN SE', 1, 1, 8),            --28
-       ('Keyboard', '게이밍 기계식 키보드 (갈축)', 38990, 13, true, 5000, 5, '스톰체이서LT', 1, 1, 8),         --29
-       ('Keyboard', 'LOW PROFILE', 99000, 12, true, 2000, 7, 'GK50', 1, 1, 7);
+                    RENTAL_PRODUCT_QUANTITY, TITLE, VIEW_COUNT, connection_id, vendor_id, state)
+VALUES ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙', 53500, 16, true, 5000, 7, 'HACKER K660', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '(정품) 컨텐츠 상세 긴 목 데이터 A occaecati tempora beatae optio nihil. Est sapiente doloribus assumenda eaque ipsa autem. Est facilis quibusdam consectetur occaecati occaecati. Nam in adipisci fuga eum debitis.', 146900, 8, true, 5000, 6, 'MX_KEYS', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '무선 키보드 (정품) (적축)', 99000, 4, true, 5000, 2, 'SIGNATURE K855', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '(정품)', 97900, 16, true, 4000, 6, 'MK850', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '(정품) 목 데이터 긴 거 A occaecati tempora beatae optio nihil. Est sapiente doloribus assumenda eaque ipsa autem. Est facilis quibusdam consectetur occaecati occaecati. Nam in adipisci fuga eum debitis.', 62950, 8, true, 5000, 6, 'MK545', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', 'OfficeMaster 한글', 159000, 8, true, 5000, 8, 'GK898B', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '그라파이트 화이트 한글', 166400, 13, true, 5000, 8, 'FC900RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '화이트투톤 한글 ', 166970, 11, true, 5000, 5, 'NP900RBT PD', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '이색사출 PBT 체리 키보드 미드나잇그린', 75000, 9, true, 5000, 7, 'HACKER K660M', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '(정품)', 249000, 15, true, 5000, 3, 'G913 TKL', 1, 1, 1, 'COMMERCIAL'),
+       ('Keyboard', '화이트 블루스타 한글', 164320, 8, true, 5000, 3, 'FC750RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '축교환 게이밍 기계식 블랙 (청축)', 33500, 13, true, 4000, 5, 'HACKER K640', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '축교환 완전방수 게이밍 카일 광축 블랙 (클릭)', 53500, 11, true, 5000, 1, 'HACKER K660', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '코랄블루 영문 (저소음 적축)', 189000, 10, true, 10000, 3, 'FC750RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '그라파이트 화이트 한글 (저소음 적축)', 169150, 8, true, 3000, 9, 'FC900RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '화이트민트 한글 (저소음적축)', 174990, 7, true, 6000, 5, 'FC900RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '이색사출 그레이 블루 한글 (저소음 적축)', 141040, 9, true, 7500, 3, 'FC900R PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '(청축)', 56900, 6, true, 4000, 4, 'STORMX K5', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '차콜 블루 한글 (저소음 적축)', 169620, 5, true, 4000, 5, 'FC900RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '기계식 키보드 (청축)', 75800, 6, true, 6000, 7, 'STORMX TITAN MARK V', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '코랄블루 영문 (저소음 적축)', 187490, 9, true, 3500, 2, 'FC750RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '(화이트, 청축)', 105000, 11, true, 4500, 5, 'SCORPIUS M10TSFL', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '스카이문 LED 완전방수 무접점 (45g)', 190000, 6, true, 4500, 6, 'HACKER K990 V3', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '(청축)', 132000, 15, true, 6000, 2, 'TESORO M9 SPECTRUM', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '무선 블루투스 기계식 미니 키보드 (블랙)', 165000, 8, true, 8000, 7, 'K660M-L68', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '그레이퍼플 한글 (청축)', 164900, 10, true, 10000, 6, 'FC900RBT PD', 1, 1, 4, 'COMMERCIAL'),
+       ('Keyboard', '무접점 키보드 (그레이, 30g)', 199000, 12, true, 4500, 4, 'KN10C PBT', 1, 1, 2, 'COMMERCIAL'),
+       ('Keyboard', '(화이트)', 27850, 13, true, 3000, 3, 'STORMX TITAN SE', 1, 1, 8, 'COMMERCIAL'),
+       ('Keyboard', '게이밍 기계식 키보드 (갈축)', 38990, 13, true, 5000, 5, '스톰체이서LT', 1, 1, 8, 'COMMERCIAL'),
+       ('Keyboard', 'LOW PROFILE', 99000, 12, true, 2000, 7, 'GK50', 1, 1, 7, 'COMMERCIAL');
 --30
 --        ('Keyboard', '', , 10, true, , 5, '', 1, 1, 1), --31
 --        ('Keyboard', '', , 10, true, , 5, '', 1, 1, 1), --32

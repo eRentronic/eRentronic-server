@@ -1,7 +1,6 @@
-package com.server.erentronic.item.keyboard;
+package com.server.erentronic.item.product;
 
 import com.server.erentronic.common.discountpolicy.DiscountPolicy;
-import com.server.erentronic.item.product.Product;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

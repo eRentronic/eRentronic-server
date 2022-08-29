@@ -5,7 +5,6 @@ import static javax.persistence.CascadeType.REMOVE;
 
 import com.server.erentronic.common.exception.NoStockException;
 import com.server.erentronic.common.message.ErrorDetail;
-import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.ArrayList;

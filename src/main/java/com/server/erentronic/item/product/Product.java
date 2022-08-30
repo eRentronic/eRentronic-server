@@ -99,8 +99,12 @@ public abstract class Product {
 		this.quantity -= orderedQuantity;
 	}
 
+	public void increaseQuantity(Integer quantity) {
+		this.quantity += quantity;
+	}
+
 	public void updateQuantity(Integer updatedQuantity) {
-		this.quantity += updatedQuantity;
+		this.quantity = updatedQuantity;
 	}
 
 	public void updateRentalProductQuantity(Integer updatedQuantity) {

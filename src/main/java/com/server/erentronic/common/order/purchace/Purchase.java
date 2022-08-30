@@ -5,15 +5,18 @@ import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.common.order.Order;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductUnit;
+import com.server.erentronic.item.product.UnitState;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Purchase extends Order {
 
 	@OneToMany
@@ -24,7 +27,7 @@ public class Purchase extends Order {
 		if (orderPrice.compareTo(product.getPrice() * orderQuantity) != 0) {
 			throw new NotMatchException(ErrorDetail.NOT_EQUALS_REAL_PRICE);
 		}
-		
+
 		product.decreaseQuantity(orderQuantity);
 
 		Purchase purchase = new Purchase();
@@ -37,5 +40,10 @@ public class Purchase extends Order {
 
 	public void assignUnits(List<ProductUnit> units) {
 		this.units.addAll(units);
+	}
+
+	public void cancel() {
+		super.product.increaseQuantity(super.quantity);
+		units.forEach(unit -> unit.changeState(UnitState.SALE));
 	}
 }

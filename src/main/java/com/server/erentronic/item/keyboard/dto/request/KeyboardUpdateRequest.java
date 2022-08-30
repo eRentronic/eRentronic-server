@@ -3,6 +3,7 @@ package com.server.erentronic.item.keyboard.dto.request;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.type.Layout;
+import com.server.erentronic.item.product.ProductState;
 import com.server.erentronic.item.product.type.Connection;
 import java.util.List;
 import javax.validation.Valid;
@@ -68,6 +69,7 @@ public class KeyboardUpdateRequest {
 		keyboard.changeRentable(rentable);
 		keyboard.updateRentalProductCount(rentalProductCount);
 		keyboard.updateQuantity(quantity);
+		keyboard.changeProductState(ProductState.COMMERCIAL);
 
 		return keyboard;
 	}

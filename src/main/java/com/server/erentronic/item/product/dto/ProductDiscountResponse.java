@@ -1,6 +1,6 @@
 package com.server.erentronic.item.product.dto;
 
-import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
+import com.server.erentronic.item.product.ProductDiscountPolicy;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

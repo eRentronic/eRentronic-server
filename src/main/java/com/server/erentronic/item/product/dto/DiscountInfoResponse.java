@@ -2,8 +2,8 @@ package com.server.erentronic.item.product.dto;
 
 import com.server.erentronic.common.discountpolicy.DiscountPolicy;
 import com.server.erentronic.common.utils.SalePriceCalculator;
-import com.server.erentronic.item.keyboard.ProductDiscountPolicy;
 import com.server.erentronic.item.product.Product;
+import com.server.erentronic.item.product.ProductDiscountPolicy;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;

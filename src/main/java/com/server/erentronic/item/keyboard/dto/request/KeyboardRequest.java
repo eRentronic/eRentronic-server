@@ -7,6 +7,7 @@ import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
+import com.server.erentronic.item.product.ProductState;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.Collections;
@@ -82,6 +83,7 @@ public class KeyboardRequest {
 		keyboard.updateRentalProductCount(rentalProductCount);
 		keyboard.updateQuantity(quantity);
 		keyboard.updateViewCount(1);
+		keyboard.changeProductState(ProductState.COMMERCIAL);
 		keyboard.setVendor(vendor);
 		keyboard.changeConnection(connection);
 

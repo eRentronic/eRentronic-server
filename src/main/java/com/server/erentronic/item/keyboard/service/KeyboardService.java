@@ -12,16 +12,16 @@ import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.item.keyboard.Keyboard;
 import com.server.erentronic.item.keyboard.KeyboardSwitch;
 import com.server.erentronic.item.keyboard.dto.request.FilterCondition;
+import com.server.erentronic.item.keyboard.dto.request.KeyboardRequest;
+import com.server.erentronic.item.keyboard.dto.request.KeyboardUpdateRequest;
+import com.server.erentronic.item.keyboard.dto.request.URLRequest;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardConnectionResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardDetailResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardFilterResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardLayoutResponse;
-import com.server.erentronic.item.keyboard.dto.request.KeyboardRequest;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardSwitchResponse;
-import com.server.erentronic.item.keyboard.dto.request.KeyboardUpdateRequest;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardVendorResponse;
-import com.server.erentronic.item.keyboard.dto.request.URLRequest;
 import com.server.erentronic.item.keyboard.repository.ConnectionRepository;
 import com.server.erentronic.item.keyboard.repository.KeyboardRepository;
 import com.server.erentronic.item.keyboard.repository.LayoutRepository;
@@ -31,6 +31,7 @@ import com.server.erentronic.item.keyboard.type.Layout;
 import com.server.erentronic.item.keyboard.type.Switch;
 import com.server.erentronic.item.product.ProductImage;
 import com.server.erentronic.item.product.ProductInfoImage;
+import com.server.erentronic.item.product.ProductState;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
 import java.util.List;
@@ -151,7 +152,9 @@ public class KeyboardService {
 
 	@Transactional
 	public CUDResponse deleteKeyboard(Long id) {
-		keyboardRepository.deleteById(id);
+		Keyboard keyboard = keyboardRepository.findById(id)
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
+		keyboard.changeProductState(ProductState.EXTINCTION);
 		return CUDResponse.of(id, PRODUCT_DELETED_MESSAGE);
 	}
 

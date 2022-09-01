@@ -78,4 +78,8 @@ public class OrderService {
 			throw new NotMatchException(ErrorDetail.NOT_EQUALS_REAL_TOTAL_PRICE);
 		}
 	}
+
+	public CUDResponse rent(Member loginMember, OrderSheetRequest orderSheetRequest) {
+		return null;
+	}
 }

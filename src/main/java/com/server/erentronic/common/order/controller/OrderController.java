@@ -23,4 +23,10 @@ public class OrderController {
 
 		return orderService.makePurchase(loginMember, orderSheetRequest);
 	}
+
+	@PostMapping("/rental")
+	public CUDResponse rent(Member loginMember, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
+
+		return orderService.rent(loginMember, orderSheetRequest);
+	}
 }

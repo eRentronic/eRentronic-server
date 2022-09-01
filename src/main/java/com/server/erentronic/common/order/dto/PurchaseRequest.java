@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class OrderRequest {
+public class PurchaseRequest {
 
 	@Positive
 	private Long productId;

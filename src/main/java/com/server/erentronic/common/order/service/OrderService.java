@@ -35,7 +35,7 @@ public class OrderService {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public CUDResponse makePurchase(Member loginMember, OrderSheetRequest orderSheetRequests) {
+	public CUDResponse purchase(Member loginMember, OrderSheetRequest orderSheetRequests) {
 
 		//todo 로그인 기능 구현 후 제거해야 함
 		loginMember = memberRepository.findById(1L).get();

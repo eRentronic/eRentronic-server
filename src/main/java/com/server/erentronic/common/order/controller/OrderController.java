@@ -19,9 +19,9 @@ public class OrderController {
 	private final OrderService orderService;
 
 	@PostMapping("/purchase")
-	public CUDResponse makePurchase(Member loginMember, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
+	public CUDResponse purchase(Member loginMember, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
 
-		return orderService.makePurchase(loginMember, orderSheetRequest);
+		return orderService.purchase(loginMember, orderSheetRequest);
 	}
 
 	@PostMapping("/rental")

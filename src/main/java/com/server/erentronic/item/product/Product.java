@@ -106,4 +106,11 @@ public abstract class Product {
 	public void updateRentalProductQuantity(Integer updatedQuantity) {
 		this.rentalProductQuantity += updatedQuantity;
 	}
+
+	public void decreaseRentalQuantity(Integer orderedRentalQuantity) {
+		if (this.rentalProductQuantity < orderedRentalQuantity) {
+			throw new NoStockException(ErrorDetail.NO_STOCK_PRODUCT);
+		}
+		this.rentalProductQuantity -= orderedRentalQuantity;
+	}
 }

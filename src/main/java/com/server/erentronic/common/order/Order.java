@@ -41,4 +41,12 @@ public abstract class Order {
 	public void assignOrderSheet(OrderSheet orderSheet) {
 		this.orderSheet = orderSheet;
 	}
+
+	public boolean purchase(Integer productPrice) {
+		return productPrice * quantity == price;
+	}
+
+	public boolean rent(Integer productPrice, int rentalPeriod) {
+		return productPrice * quantity * rentalPeriod == price;
+	}
 }

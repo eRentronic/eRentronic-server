@@ -118,8 +118,12 @@ public class OrderService {
 
 	private void rentProduct(List<Order> rentals, RentalRequest rentalRequest, Product product) {
 
+		LocalDateTime startDateTime = rentalRequest.getStartDateTime();
+		LocalDateTime endDateTime = rentalRequest.getEndDateTime();
+		validateRentalPeriod(startDateTime, endDateTime);
+
 		Rental rental = Rental.makeRental(product, rentalRequest.getQuantity(),
-			rentalRequest.getStartDateTime(), rentalRequest.getEndDateTime(), rentalRequest.getProductTotalPrice());
+			startDateTime, endDateTime, rentalRequest.getProductTotalPrice());
 
 		List<ProductRentalUnit> units = productRentalUnitRepository.findAllByProductAndState(
 				product, RentalUnitState.RENTAL_AVAILABLE).subList(0, rentalRequest.getQuantity());
@@ -128,5 +132,12 @@ public class OrderService {
 		rental.assignUnits(units);
 
 		rentals.add(rental);
+	}
+
+	private void validateRentalPeriod(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+		if (startDateTime.toLocalDate().isEqual(endDateTime.toLocalDate())
+			|| startDateTime.toLocalDate().isAfter(endDateTime.toLocalDate())) {
+			throw new RuntimeException();
+		}
 	}
 }

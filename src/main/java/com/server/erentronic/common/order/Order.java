@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Table(name = "orders")
+@Getter
 public abstract class Order {
 
 	@Id
@@ -34,19 +36,17 @@ public abstract class Order {
 	@ManyToOne(fetch = FetchType.LAZY)
 	protected Product product;
 
+	protected Double totalDiscountRate;
+
+	protected String discountDetail; //이벤트 이름, 적용된 할인율, 할인을 적용한 할인가격 -> 만드는 빌더 있어야 할듯?
+
 	protected Integer quantity;
 
 	protected Integer price;
+	
+	protected Integer salePrice;
 
 	public void assignOrderSheet(OrderSheet orderSheet) {
 		this.orderSheet = orderSheet;
-	}
-
-	public boolean purchase(Integer productPrice) {
-		return productPrice * quantity == price;
-	}
-
-	public boolean rent(Integer productPrice, int rentalPeriod) {
-		return productPrice * quantity * rentalPeriod == price;
 	}
 }

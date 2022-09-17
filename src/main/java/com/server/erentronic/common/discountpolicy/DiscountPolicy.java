@@ -22,4 +22,9 @@ public class DiscountPolicy {
 	private String title;
 
 	private Double rate;
+
+	@Override
+	public String toString() {
+		return id + ": " + title + "(" + rate + " 할인)";
+	}
 }

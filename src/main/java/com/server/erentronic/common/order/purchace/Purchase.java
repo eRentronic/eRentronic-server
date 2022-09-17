@@ -21,6 +21,7 @@ public class Purchase extends Order {
 
 	public static Purchase makePurchase(Product product, Integer orderQuantity, Integer orderPrice) {
 
+		//todo 할인가격 적용해야 함
 		if (orderPrice.compareTo(product.getPrice() * orderQuantity) != 0) {
 			throw new NotMatchException(ErrorDetail.NOT_EQUALS_REAL_PRICE);
 		}

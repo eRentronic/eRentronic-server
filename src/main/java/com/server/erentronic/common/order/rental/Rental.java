@@ -31,6 +31,7 @@ public class Rental extends Order {
 
 		int rentalPeriod = (int) ChronoUnit.DAYS.between(startDateTime, endDateTime);
 
+		//todo 할인가격 적용해야 함
 		if (orderPrice.compareTo(product.getRentalPrice() * rentalPeriod * orderQuantity) != 0) {
 			throw new NotMatchException(ErrorDetail.NOT_EQUALS_REAL_PRICE);
 		}

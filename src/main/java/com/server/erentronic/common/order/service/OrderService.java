@@ -20,6 +20,7 @@ import com.server.erentronic.item.product.UnitState;
 import com.server.erentronic.item.product.repository.ProductRentalUnitRepository;
 import com.server.erentronic.item.product.repository.ProductRepository;
 import com.server.erentronic.item.product.repository.ProductUnitRepository;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +49,14 @@ public class OrderService {
 
 		//todo
 		// 렌탈, 구매 요청 총 가격 검증 로직 작성
+		// 할인가 검증은?
 
 		List<Order> orders = new ArrayList<>(purchases);
 		orders.addAll(rentals);
+
+		// 주문서에 포함된 모든 주문에 대한 총 가격
+		Integer totalPrice = orders.stream().mapToInt(Order::getPrice).sum();
+
 
 		OrderSheet orderSheet = OrderSheet.makeOrderSheet(orders, loginMember,
 			orderSheetRequest.getAddress(), orderSheetRequest.getTotalPrice());
@@ -67,6 +73,7 @@ public class OrderService {
 		List<Order> purchases = new ArrayList<>();
 
 		for (PurchaseRequest purchaseRequest : purchaseRequests) {
+			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(purchaseRequest.getProductId())
 				.orElseThrow(RuntimeException::new);
 
@@ -105,6 +112,7 @@ public class OrderService {
 		List<Order> rentals = new ArrayList<>();
 		for (RentalRequest rentalRequest : rentalRequests) {
 
+			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(rentalRequest.getProductId())
 				.orElseThrow(RuntimeException::new);
 

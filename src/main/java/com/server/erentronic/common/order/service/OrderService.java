@@ -1,6 +1,8 @@
 package com.server.erentronic.common.order.service;
 
 import com.server.erentronic.common.dto.CUDResponse;
+import com.server.erentronic.common.exception.InvalidInputException;
+import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.exception.NotMatchException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.MemberRepository;
@@ -70,9 +72,8 @@ public class OrderService {
 		List<Order> purchases = new ArrayList<>();
 
 		for (PurchaseRequest purchaseRequest : purchaseRequests) {
-			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(purchaseRequest.getProductId())
-				.orElseThrow(RuntimeException::new);
+				.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 			purchaseProduct(purchases, purchaseRequest, product);
 		}
@@ -106,10 +107,8 @@ public class OrderService {
 
 		List<Order> rentals = new ArrayList<>();
 		for (RentalRequest rentalRequest : rentalRequests) {
-
-			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(rentalRequest.getProductId())
-				.orElseThrow(RuntimeException::new);
+				.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 			rentProduct(rentals, rentalRequest, product);
 		}
@@ -136,10 +135,9 @@ public class OrderService {
 	}
 
 	private void validateRentalPeriod(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-		//todo 알맞을 에러로 변환 필요
 		if (startDateTime.toLocalDate().isEqual(endDateTime.toLocalDate())
 			|| startDateTime.toLocalDate().isAfter(endDateTime.toLocalDate())) {
-			throw new RuntimeException();
+			throw new InvalidInputException(ErrorDetail.INVALID_RENTAL_PERIOD);
 		}
 	}
 

@@ -92,18 +92,18 @@ public class KeyboardService {
 		List<Long> switchIds = keyboardUpdateRequest.getSwitchIds();
 
 		Keyboard keyboard = keyboardRepository.findById(id)
-			.orElseThrow(RuntimeException::new);
+			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 		Connection connection = null;
 		if (connectionId != null) {
 			connection = connectionRepository.findById(connectionId)
-				.orElseThrow(RuntimeException::new);
+				.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_CONNECTION));
 		}
 
 		Layout layout = null;
 		if (layoutId != null) {
 			layout = layoutRepository.findById(layoutId)
-				.orElseThrow(RuntimeException::new);
+				.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_LAYOUT));
 		}
 
 		List<KeyboardSwitch> switches = null;
@@ -137,7 +137,6 @@ public class KeyboardService {
 	}
 
 	public KeyboardDetailResponse getKeyboardDetail(Long id) {
-		// todo RuntimeException -> CustomException ex) NoSuchElement
 		Keyboard keyboard = keyboardRepository.findById(id)
 			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 		keyboardRepository.findInfoImagesByKeyboardId(id)

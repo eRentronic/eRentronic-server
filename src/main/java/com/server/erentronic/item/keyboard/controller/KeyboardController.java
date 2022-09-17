@@ -34,7 +34,7 @@ public class KeyboardController {
 
 	@GetMapping
 	public Slice<KeyboardSimpleResponse> getKeyboardCards(
-		@PageableDefault(size = 9) Pageable pageable, @Valid FilterCondition filterCondition) {
+		@PageableDefault(size = 12) Pageable pageable, @Valid FilterCondition filterCondition) {
 		return keyboardService.getKeyboardCards(pageable, filterCondition);
 	}
 

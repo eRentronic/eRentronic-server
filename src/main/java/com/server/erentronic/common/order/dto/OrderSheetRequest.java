@@ -13,9 +13,11 @@ import lombok.NoArgsConstructor;
 @Getter
 public class OrderSheetRequest {
 
-	@NotNull
 	@Valid
-	private List<OrderRequest> orders;
+	private List<PurchaseRequest> purchases;
+
+	@Valid
+	private List<RentalRequest> rentals;
 
 	@NotNull
 	@Valid

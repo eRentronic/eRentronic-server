@@ -8,16 +8,19 @@ import com.server.erentronic.common.utils.SalePriceCalculator;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductDiscountPolicy;
 import com.server.erentronic.item.product.ProductUnit;
+import com.server.erentronic.item.product.UnitState;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Slf4j
 public class Purchase extends Order {
 
@@ -79,5 +82,10 @@ public class Purchase extends Order {
 
 	public void assignUnits(List<ProductUnit> units) {
 		this.units.addAll(units);
+	}
+
+	public void cancel() {
+		super.product.increaseQuantity(super.quantity);
+		units.forEach(unit -> unit.changeState(UnitState.SALE));
 	}
 }

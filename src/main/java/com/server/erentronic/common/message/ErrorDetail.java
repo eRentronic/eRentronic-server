@@ -18,6 +18,7 @@ public enum ErrorDetail {
 	NO_SUCH_VENDOR("해당 공급사가 존재하지 않습니다.", 400),
 	NO_SUCH_CONNECTION("해당 접점 방식이 존재하지 않습니다.", 400),
 	NO_SUCH_LAYOUT("해당 배열이 존재하지 않습니다.", 400),
+	NO_SUCH_ORDER_SHEET("해당 주문이 존재하지 않습니다.", 400),
 
 	NO_STOCK_PRODUCT("해당 상품의 재고가 없습니다.", 202);
 

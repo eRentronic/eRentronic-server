@@ -6,6 +6,8 @@ import com.server.erentronic.common.order.dto.OrderSheetRequest;
 import com.server.erentronic.common.order.service.OrderService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +24,11 @@ public class OrderController {
 	public CUDResponse order(Member loginMember, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
 
 		return orderService.order(loginMember, orderSheetRequest);
+	}
+
+	@PatchMapping("/{orderSheetId}")
+	public CUDResponse cancelOrderSheet(Member loginMember, @PathVariable Long orderSheetId) {
+
+		return orderService.cancelOrderSheet(loginMember, orderSheetId);
 	}
 }

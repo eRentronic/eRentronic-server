@@ -1,8 +1,10 @@
 package com.server.erentronic.common.order.service;
 
 import com.server.erentronic.common.dto.CUDResponse;
+import com.server.erentronic.common.exception.NotMatchException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.MemberRepository;
+import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.common.message.Message;
 import com.server.erentronic.common.order.Order;
 import com.server.erentronic.common.order.OrderSheet;
@@ -20,6 +22,7 @@ import com.server.erentronic.item.product.UnitState;
 import com.server.erentronic.item.product.repository.ProductRentalUnitRepository;
 import com.server.erentronic.item.product.repository.ProductRepository;
 import com.server.erentronic.item.product.repository.ProductUnitRepository;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +49,11 @@ public class OrderService {
 		List<Order> purchases = purchase(loginMember, orderSheetRequest);
 		List<Order> rentals = rent(loginMember, orderSheetRequest);
 
-		//todo
-		// 렌탈, 구매 요청 총 가격 검증 로직 작성
-
 		List<Order> orders = new ArrayList<>(purchases);
 		orders.addAll(rentals);
+
+		Integer totalPrice = orders.stream().mapToInt(Order::getSalePrice).sum();
+		validateTotalPrice(orderSheetRequest.getTotalPrice(), totalPrice);
 
 		OrderSheet orderSheet = OrderSheet.makeOrderSheet(orders, loginMember,
 			orderSheetRequest.getAddress(), orderSheetRequest.getTotalPrice());
@@ -67,6 +70,7 @@ public class OrderService {
 		List<Order> purchases = new ArrayList<>();
 
 		for (PurchaseRequest purchaseRequest : purchaseRequests) {
+			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(purchaseRequest.getProductId())
 				.orElseThrow(RuntimeException::new);
 
@@ -94,23 +98,20 @@ public class OrderService {
 	private List<Order> rent(Member loginMember, OrderSheetRequest orderSheetRequest) {
 
 		//todo
-		// 렌탈도 구매와 똑같이 가격 검증, 수량 검증, 동시성 나중에 생각
+		// 렌탈도 동시성 나중에 생각
 		// 렌탈은 반납 일정 관리를 해야하기 때문에 새로운 테이블에 저장해야 함
 		// 새로운 테이블은 OrderSheet fk, 나간 상품 Unit fk, 대여일, 반납일, 반납여부, pk
 
 		List<RentalRequest> rentalRequests = orderSheetRequest.getRentals();
 
-		Integer totalPrice = 0;
-
 		List<Order> rentals = new ArrayList<>();
 		for (RentalRequest rentalRequest : rentalRequests) {
 
+			//todo 알맞은 에러로 변경해야 함
 			Product product = productRepository.findById(rentalRequest.getProductId())
 				.orElseThrow(RuntimeException::new);
 
 			rentProduct(rentals, rentalRequest, product);
-
-			totalPrice += product.getPrice() * rentalRequest.getQuantity();
 		}
 
 		return rentals;
@@ -135,9 +136,16 @@ public class OrderService {
 	}
 
 	private void validateRentalPeriod(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+		//todo 알맞을 에러로 변환 필요
 		if (startDateTime.toLocalDate().isEqual(endDateTime.toLocalDate())
 			|| startDateTime.toLocalDate().isAfter(endDateTime.toLocalDate())) {
 			throw new RuntimeException();
+		}
+	}
+
+	private void validateTotalPrice(Integer orderTotalPrice, Integer calculatedTotalPrice) {
+		if (orderTotalPrice.compareTo(calculatedTotalPrice) != 0) {
+			throw new NotMatchException(ErrorDetail.NOT_EQUALS_REAL_PRICE);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.server.erentronic.item.product;
 
+import com.server.erentronic.common.order.purchace.Purchase;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

@@ -8,11 +8,13 @@ import com.server.erentronic.common.utils.SalePriceCalculator;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductDiscountPolicy;
 import com.server.erentronic.item.product.ProductRentalUnit;
+import com.server.erentronic.item.product.RentalUnitState;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -32,6 +34,7 @@ public class Rental extends Order {
 	private LocalDateTime endDateTime;
 
 	@OneToMany
+	@JoinColumn
 	private List<ProductRentalUnit> units = new ArrayList<>();
 
 	public static Rental makeRental(Product product, Integer orderQuantity, LocalDateTime startDateTime,
@@ -94,5 +97,10 @@ public class Rental extends Order {
 
 	public void assignUnits(List<ProductRentalUnit> units) {
 		this.units.addAll(units);
+	}
+
+	public void cancel() {
+		super.product.increaseRentalProductQuantity(super.quantity);
+		units.forEach(unit -> unit.changeState(RentalUnitState.RENTAL_AVAILABLE));
 	}
 }

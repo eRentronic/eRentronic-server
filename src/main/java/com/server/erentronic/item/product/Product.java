@@ -107,7 +107,7 @@ public abstract class Product {
 		this.quantity = updatedQuantity;
 	}
 
-	public void updateRentalProductQuantity(Integer updatedQuantity) {
+	public void increaseRentalProductQuantity(Integer updatedQuantity) {
 		this.rentalProductQuantity += updatedQuantity;
 	}
 

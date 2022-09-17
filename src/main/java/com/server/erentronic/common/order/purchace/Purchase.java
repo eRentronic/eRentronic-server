@@ -12,6 +12,7 @@ import com.server.erentronic.item.product.UnitState;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Purchase extends Order {
 
 	@OneToMany
+	@JoinColumn
 	private List<ProductUnit> units = new ArrayList<>();
 
 	public static Purchase makePurchase(Product product, Integer orderQuantity, Integer orderPrice) {

@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class Rental extends Order {
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -60,6 +61,8 @@ public class Rental extends Order {
 		rental.salePrice = SalePriceCalculator.calculate(product.getRentalPrice() * rentalPeriod * orderQuantity,
 			rental.totalDiscountRate);
 
+		log.info("rentalPrice: {}, rentalPeriod: {}, orderQuantity: {}", product.getRentalPrice(), rentalPeriod, orderQuantity);
+		log.info("salePrice: {}", rental.salePrice);
 
 		return rental;
 	}
@@ -67,16 +70,20 @@ public class Rental extends Order {
 	private static void iterateDiscountPolicies(Product product, Rental rental) {
 		StringBuilder discountDetailBuilder = new StringBuilder();
 
+		log.info("상품 ID {}. {} 에 적용된 할인 이벤트", product.getId(), product.getTitle());
 
 		rental.totalDiscountRate = 0.0;
 
 		for (ProductDiscountPolicy productDiscountPolicy : product.getDiscountPolicies()) {
 			DiscountPolicy discountPolicy = productDiscountPolicy.getDiscountPolicy();
+			log.info("discountPolicyRate: {}", discountPolicy.getRate());
 			rental.totalDiscountRate += discountPolicy.getRate();
 			discountDetailBuilder.append(discountPolicy).append(System.lineSeparator());
 		}
 		rental.discountDetail = discountDetailBuilder.toString();
 
+		log.info("totalDiscountRate: {}", rental.totalDiscountRate);
+		log.info("discountDetail: {}", rental.discountDetail);
 	}
 
 	private static void validatePrice(Integer orderPrice, Rental rental) {

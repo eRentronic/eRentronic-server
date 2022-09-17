@@ -39,11 +39,15 @@ public class Purchase extends Order {
 		Purchase purchase = new Purchase();
 
 		iterateDiscountPolicies(product, purchase);
+
 		purchase.salePrice = SalePriceCalculator.calculate(product.getPrice() * orderQuantity,
 			purchase.totalDiscountRate);
 		purchase.product = product;
 		purchase.quantity = orderQuantity;
 		purchase.price = orderPrice;
+
+		log.info("productPrice: {}, orderQuantity: {}", product.getPrice(), orderQuantity);
+		log.info("salePrice: {}", purchase.salePrice);
 
 		return purchase;
 	}
@@ -51,14 +55,20 @@ public class Purchase extends Order {
 	private static void iterateDiscountPolicies(Product product, Purchase purchase) {
 		StringBuilder discountDetailBuilder = new StringBuilder();
 
+		log.info("상품 ID {}. {} 에 적용된 할인 이벤트", product.getId(), product.getTitle());
+
 		purchase.totalDiscountRate = 0.0;
 
 		for (ProductDiscountPolicy productDiscountPolicy : product.getDiscountPolicies()) {
 			DiscountPolicy discountPolicy = productDiscountPolicy.getDiscountPolicy();
+			log.info("discountPolicyRate: {}", discountPolicy.getRate());
 			purchase.totalDiscountRate += discountPolicy.getRate();
 			discountDetailBuilder.append(discountPolicy).append(System.lineSeparator());
 		}
 		purchase.discountDetail = discountDetailBuilder.toString();
+
+		log.info("totalDiscountRate: {}", purchase.totalDiscountRate);
+		log.info("discountDetail: {}", purchase.discountDetail);
 	}
 
 	private static void validatePrice(Integer orderPrice, Purchase purchase) {

@@ -34,6 +34,7 @@ import com.server.erentronic.item.product.ProductInfoImage;
 import com.server.erentronic.item.product.ProductState;
 import com.server.erentronic.item.product.type.Connection;
 import com.server.erentronic.item.product.type.Vendor;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -148,6 +149,16 @@ public class KeyboardService {
 			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_PRODUCT));
 
 		return KeyboardDetailResponse.from(keyboard);
+	}
+
+	public List<KeyboardSimpleResponse> recommendKeyboards(Long id) {
+		//todo 나중에 바꿔야 함
+		// 로직을 어떻게 할지는 머리아픔
+		List<Keyboard> keyboards = keyboardRepository.findAll();
+		Collections.shuffle(keyboards);
+		return keyboards.subList(0, 5).stream()
+			.map(KeyboardSimpleResponse::of)
+			.collect(Collectors.toList());
 	}
 
 	@Transactional

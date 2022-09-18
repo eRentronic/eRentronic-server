@@ -8,6 +8,7 @@ import com.server.erentronic.item.keyboard.dto.response.KeyboardDetailResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardFilterResponse;
 import com.server.erentronic.item.keyboard.dto.response.KeyboardSimpleResponse;
 import com.server.erentronic.item.keyboard.service.KeyboardService;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,11 @@ public class KeyboardController {
 	@GetMapping("/{id}")
 	public KeyboardDetailResponse getKeyboardDetail(@PathVariable @Positive Long id) {
 		return keyboardService.getKeyboardDetail(id);
+	}
+
+	@GetMapping("/{id}/recommendations")
+	public List<KeyboardSimpleResponse> getKeyboardRecommendations(@PathVariable @Positive Long id) {
+		return keyboardService.recommendKeyboards(id);
 	}
 
 	@DeleteMapping("/{id}")

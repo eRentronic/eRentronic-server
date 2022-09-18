@@ -37,6 +37,7 @@ import com.server.erentronic.item.product.type.Vendor;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -157,6 +158,7 @@ public class KeyboardService {
 		return CUDResponse.of(id, PRODUCT_DELETED_MESSAGE);
 	}
 
+	@Cacheable(cacheNames = "keyboardFilterResponse")
 	public KeyboardFilterResponse getFilters() {
 
 		List<KeyboardVendorResponse> vendors = vendorRepository.findAllByProductType(KEYBOARD)

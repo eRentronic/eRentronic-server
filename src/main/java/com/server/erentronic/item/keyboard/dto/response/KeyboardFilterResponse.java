@@ -1,5 +1,7 @@
 package com.server.erentronic.item.keyboard.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class KeyboardFilterResponse {
+public class KeyboardFilterResponse implements Serializable {
+
+	@JsonIgnore
+	private static final long serialVersionUID = 7498994475208106085L;
 
 	private final List<KeyboardVendorResponse> vendors;
 

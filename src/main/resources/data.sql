@@ -26,9 +26,9 @@ VALUES ('BLUE'),
        ('BLACK'),
        ('SILENCE_RED');
 
-INSERT INTO member(name, email, full_address, address1, address2, zip_code)
+INSERT INTO member(name, email, full_address, address1, address2, zip_code, password)
 VALUES ('name', 'mock@mock.com', '서울 송파구 송파대로 567 101동 101호', '서울 송파구 송파대로 567', '101동 101호',
-        '05503');
+        '05503', 'password1234');
 
 INSERT INTO discount_policy(title, rate)
 VALUES ('이벤트 할인', 0.0225),

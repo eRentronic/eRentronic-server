@@ -13,7 +13,9 @@ public enum Message {
 
 	PRODUCT_CREATED_MESSAGE("상품이 등록되었습니다."),
 	PRODUCT_DELETED_MESSAGE("상품이 삭제되었습니다."),
-	PRODUCT_PATCHED_MESSAGE("상품이 수정되었습니다.");
+	PRODUCT_PATCHED_MESSAGE("상품이 수정되었습니다."),
+
+	MEMBER_SIGN_UP_MESSAGE("회원가입이 완료되었습니다.");
 
 	final String message;
 }

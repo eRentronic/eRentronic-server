@@ -6,7 +6,7 @@ import com.server.erentronic.common.exception.NoStockException;
 import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.exception.NotMatchException;
 import com.server.erentronic.common.member.Member;
-import com.server.erentronic.common.member.MemberRepository;
+import com.server.erentronic.common.member.repository.MemberRepository;
 import com.server.erentronic.common.message.ErrorDetail;
 import com.server.erentronic.common.message.Message;
 import com.server.erentronic.common.order.Order;

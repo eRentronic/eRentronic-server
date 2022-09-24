@@ -14,10 +14,12 @@ public class JwtTokenProvider {
 
 	private final String issuer;
 	private final String secretKey;
+	private final Long accessTokenExpirationHour;
 
 	public JwtTokenProvider(JwtProperties properties) {
 		this.issuer = properties.getIssuer();
 		this.secretKey = properties.getSecretKey();
+		this.accessTokenExpirationHour = properties.getAccessTokenExpirationHour();
 	}
 
 	public String makeJwtAccessToken(Member member) {
@@ -25,7 +27,7 @@ public class JwtTokenProvider {
 			.setAudience(member.getId().toString())
 			.setIssuer(issuer)
 			.setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-			.setExpiration(Timestamp.valueOf(LocalDateTime.now().plusHours(1L)))
+			.setExpiration(Timestamp.valueOf(LocalDateTime.now().plusHours(accessTokenExpirationHour)))
 			.signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)))
 			.compact();
 

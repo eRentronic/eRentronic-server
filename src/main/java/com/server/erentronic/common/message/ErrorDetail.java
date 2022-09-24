@@ -20,7 +20,11 @@ public enum ErrorDetail {
 	NO_SUCH_LAYOUT("해당 배열이 존재하지 않습니다.", 400),
 	NO_SUCH_ORDER_SHEET("해당 주문이 존재하지 않습니다.", 400),
 
-	NO_STOCK_PRODUCT("해당 상품의 재고가 없습니다.", 202);
+	NO_STOCK_PRODUCT("해당 상품의 재고가 없습니다.", 202),
+
+	//auth 관련
+	NO_SUCH_MEMBER_WITH_EMAIL("해당 email 의 회원이 존재하지 않습니다.", 400),
+	NOT_MATCH_PASSWORD("비밀번호가 올바르지 않습니다.", 400);
 
 	private final String message;
 	private final int status;

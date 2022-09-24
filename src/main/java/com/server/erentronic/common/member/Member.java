@@ -1,6 +1,8 @@
 package com.server.erentronic.common.member;
 
 import com.server.erentronic.common.address.Address;
+import com.server.erentronic.common.exception.AuthException;
+import com.server.erentronic.common.message.ErrorDetail;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,10 +45,9 @@ public class Member {
 	}
 
 	public void validatePassword(String password) {
-		//todo 커스텀 에러로 변경!
 		if (!this.password.equals(password)) {
 			log.info("memberPassword: {}, requestPassword: {}", this.password, password);
-			throw new RuntimeException();
+			throw new AuthException(ErrorDetail.NOT_MATCH_PASSWORD);
 		}
 	}
 }

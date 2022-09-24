@@ -1,9 +1,11 @@
 package com.server.erentronic.auth.service;
 
+import com.server.erentronic.common.exception.NoMemberException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.repository.MemberRepository;
 import com.server.erentronic.auth.dto.LoginRequest;
 import com.server.erentronic.auth.jwt.JwtTokenProvider;
+import com.server.erentronic.common.message.ErrorDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,11 @@ public class AuthService {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	public String login(LoginRequest request) {
-		//todo 커스텀 에러로 변경
 		String email = request.getEmail();
 		String password = request.getPassword();
 
-		Member member = memberRepository.findByEmail(email).orElseThrow(RuntimeException::new);
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new NoMemberException(ErrorDetail.NO_SUCH_MEMBER_WITH_EMAIL));
 
 		member.validatePassword(password);
 

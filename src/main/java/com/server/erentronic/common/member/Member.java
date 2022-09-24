@@ -11,10 +11,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Slf4j
 public class Member {
 
 	@Id
@@ -38,5 +40,13 @@ public class Member {
 		this.email = email;
 		this.password = password;
 		this.address = address;
+	}
+
+	public void validatePassword(String password) {
+		//todo 커스텀 에러로 변경!
+		if (!this.password.equals(password)) {
+			log.info("memberPassword: {}, requestPassword: {}", this.password, password);
+			throw new RuntimeException();
+		}
 	}
 }

@@ -1,9 +1,9 @@
-package com.server.erentronic.login.service;
+package com.server.erentronic.auth.service;
 
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.repository.MemberRepository;
-import com.server.erentronic.login.dto.LoginRequest;
-import com.server.erentronic.login.jwt.JwtTokenProvider;
+import com.server.erentronic.auth.dto.LoginRequest;
+import com.server.erentronic.auth.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

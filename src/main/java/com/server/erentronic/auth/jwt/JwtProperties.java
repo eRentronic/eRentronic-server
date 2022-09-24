@@ -1,4 +1,4 @@
-package com.server.erentronic.login.jwt;
+package com.server.erentronic.auth.jwt;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

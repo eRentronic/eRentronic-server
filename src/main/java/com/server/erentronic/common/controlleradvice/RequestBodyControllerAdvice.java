@@ -2,7 +2,7 @@ package com.server.erentronic.common.controlleradvice;
 
 import com.server.erentronic.common.member.dto.SignUpRequest;
 import com.server.erentronic.common.utils.Sha256;
-import com.server.erentronic.login.dto.LoginRequest;
+import com.server.erentronic.auth.dto.LoginRequest;
 import java.lang.reflect.Type;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

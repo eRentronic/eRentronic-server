@@ -1,7 +1,7 @@
-package com.server.erentronic.login.controller;
+package com.server.erentronic.auth.controller;
 
-import com.server.erentronic.login.dto.LoginRequest;
-import com.server.erentronic.login.service.AuthService;
+import com.server.erentronic.auth.dto.LoginRequest;
+import com.server.erentronic.auth.service.AuthService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

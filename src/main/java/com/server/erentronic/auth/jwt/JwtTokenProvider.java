@@ -1,4 +1,4 @@
-package com.server.erentronic.login.jwt;
+package com.server.erentronic.auth.jwt;
 
 import com.server.erentronic.common.member.Member;
 import io.jsonwebtoken.Claims;

@@ -1,4 +1,4 @@
-package com.server.erentronic.login.dto;
+package com.server.erentronic.auth.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

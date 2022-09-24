@@ -1,6 +1,6 @@
 package com.server.erentronic.auth.service;
 
-import com.server.erentronic.common.exception.NoMemberException;
+import com.server.erentronic.common.exception.NoSuchMemberException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.repository.MemberRepository;
 import com.server.erentronic.auth.dto.LoginRequest;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 	private final MemberRepository memberRepository;
-	
 	private final JwtTokenProvider jwtTokenProvider;
 
 	public String login(LoginRequest request) {
@@ -24,7 +23,7 @@ public class AuthService {
 		String password = request.getPassword();
 
 		Member member = memberRepository.findByEmail(email)
-			.orElseThrow(() -> new NoMemberException(ErrorDetail.NO_SUCH_MEMBER_WITH_EMAIL));
+			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER_WITH_EMAIL));
 
 		member.validatePassword(password);
 

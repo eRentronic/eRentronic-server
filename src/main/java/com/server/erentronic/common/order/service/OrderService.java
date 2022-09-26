@@ -4,6 +4,7 @@ import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.InvalidInputException;
 import com.server.erentronic.common.exception.NoStockException;
 import com.server.erentronic.common.exception.NoSuchItemException;
+import com.server.erentronic.common.exception.NoSuchMemberException;
 import com.server.erentronic.common.exception.NotMatchException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.repository.MemberRepository;
@@ -47,12 +48,15 @@ public class OrderService {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public CUDResponse order(Member loginMember, OrderSheetRequest orderSheetRequest) {
-		//todo 로그인 기능 구현 후 제거해야 함
-		loginMember = memberRepository.findById(1L).get();
+	public CUDResponse order(Long memberId, OrderSheetRequest orderSheetRequest) {
 
-		List<Order> purchases = purchase(loginMember, orderSheetRequest);
-		List<Order> rentals = rent(loginMember, orderSheetRequest);
+		log.info(">>>>>>>>>>>>>> memberId: {}", memberId);
+
+		Member loginMember = memberRepository.findById(memberId)
+			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER));
+
+		List<Order> purchases = purchase(orderSheetRequest);
+		List<Order> rentals = rent(orderSheetRequest);
 
 		List<Order> orders = new ArrayList<>(purchases);
 		orders.addAll(rentals);
@@ -68,7 +72,7 @@ public class OrderService {
 		return CUDResponse.of(orderSheet.getId(), Message.ORDER_SUCCESS_MESSAGE);
 	}
 
-	private List<Order> purchase(Member loginMember, OrderSheetRequest orderSheetRequest) {
+	private List<Order> purchase(OrderSheetRequest orderSheetRequest) {
 
 		List<PurchaseRequest> purchaseRequests = orderSheetRequest.getPurchases();
 
@@ -104,12 +108,12 @@ public class OrderService {
 		purchases.add(purchase);
 	}
 
-	private List<Order> rent(Member loginMember, OrderSheetRequest orderSheetRequest) {
+	private List<Order> rent(OrderSheetRequest orderSheetRequest) {
 
 		//todo
 		// 렌탈도 동시성 나중에 생각
 		// 렌탈은 반납 일정 관리를 해야하기 때문에 새로운 테이블에 저장해야 함
-		// 새로운 테이블은 OrderSheet fk, 나간 상품 Unit fk, 대여일, 반납일, 반납여부, pk
+		// 새로운 테이블은 OrderSheet fk, 나간 상품 Unit fk, 대여일, 반납일, 반납여부, pk,     // 빌린 사용자? -> OrderSheet을 보고 알 수 있긴 함
 
 		List<RentalRequest> rentalRequests = orderSheetRequest.getRentals();
 
@@ -148,11 +152,16 @@ public class OrderService {
 	}
 
 	@Transactional
-	public CUDResponse cancelOrderSheet(Member loginMember, Long orderSheetId) {
+	public CUDResponse cancelOrderSheet(Long memberId, Long orderSheetId) {
 		//todo loginMember와 orderSheet의 멤버가 동일한 사람인지 판별해야 함
+
+		Member loginMember = memberRepository.findById(memberId)
+			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER));
 
 		OrderSheet prevOrderSheet = orderSheetRepository.findById(orderSheetId)
 			.orElseThrow(() -> new NoSuchItemException(ErrorDetail.NO_SUCH_ORDER_SHEET));
+
+		prevOrderSheet.validateMember(loginMember);
 
 		List<Purchase> purchases = prevOrderSheet.getOrders()
 			.stream()

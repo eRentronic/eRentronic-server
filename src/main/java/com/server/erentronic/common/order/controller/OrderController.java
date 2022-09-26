@@ -1,5 +1,6 @@
 package com.server.erentronic.common.order.controller;
 
+import com.server.erentronic.auth.annotation.LoginId;
 import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.order.dto.OrderSheetRequest;
@@ -21,14 +22,14 @@ public class OrderController {
 	private final OrderService orderService;
 
 	@PostMapping
-	public CUDResponse order(Member loginMember, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
+	public CUDResponse order(@LoginId Long memberId, @RequestBody @Valid OrderSheetRequest orderSheetRequest) {
 
-		return orderService.order(loginMember, orderSheetRequest);
+		return orderService.order(memberId, orderSheetRequest);
 	}
 
 	@PatchMapping("/{orderSheetId}")
-	public CUDResponse cancelOrderSheet(Member loginMember, @PathVariable Long orderSheetId) {
+	public CUDResponse cancelOrderSheet(@LoginId Long memberId, @PathVariable Long orderSheetId) {
 
-		return orderService.cancelOrderSheet(loginMember, orderSheetId);
+		return orderService.cancelOrderSheet(memberId, orderSheetId);
 	}
 }

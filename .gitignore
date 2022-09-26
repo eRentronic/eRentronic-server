@@ -38,3 +38,5 @@ out/
 
 /api
 /src/main/generated
+
+/src/main/resources/jwt.yml

@@ -18,6 +18,6 @@ public class AuthController {
 	@PostMapping("/login")
 	public void login(@RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
 		String jwtAccessToken = authService.login(loginRequest);
-		response.setHeader("Access-Token", jwtAccessToken);
+		response.setHeader("Access-Token", "bearer " + jwtAccessToken);
 	}
 }

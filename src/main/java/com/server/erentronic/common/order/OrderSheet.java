@@ -1,7 +1,9 @@
 package com.server.erentronic.common.order;
 
 import com.server.erentronic.common.address.Address;
+import com.server.erentronic.common.exception.NotMatchException;
 import com.server.erentronic.common.member.Member;
+import com.server.erentronic.common.message.ErrorDetail;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +90,11 @@ public class OrderSheet {
 		}
 
 		return orderSheet;
+	}
+
+	public void validateMember(Member member) {
+		if (this.member != member) {
+			throw new NotMatchException(ErrorDetail.NOT_MATCH_ORDER_SHEET_MEMBER);
+		}
 	}
 }

@@ -23,9 +23,11 @@ public enum ErrorDetail {
 	NO_STOCK_PRODUCT("해당 상품의 재고가 없습니다.", 202),
 
 	//auth 관련
+	NO_SUCH_MEMBER("해당 회원이 존재하지 않습니다.", 400),
 	DUPLICATED_EMAIL("해당 email 의 회원이 이미 존재합니다.", 400),
 	NO_SUCH_MEMBER_WITH_EMAIL("해당 email 의 회원이 존재하지 않습니다.", 400),
-	NOT_MATCH_PASSWORD("비밀번호가 올바르지 않습니다.", 400);
+	NOT_MATCH_PASSWORD("비밀번호가 올바르지 않습니다.", 400),
+	NOT_MATCH_ORDER_SHEET_MEMBER("해당 주문서의 회원과 로그인한 회원이 일치하지 않습니다.", 400);
 
 	private final String message;
 	private final int status;

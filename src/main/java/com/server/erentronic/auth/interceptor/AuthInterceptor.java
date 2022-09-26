@@ -5,6 +5,8 @@ import static com.server.erentronic.auth.AuthConst.BEARER;
 import static com.server.erentronic.auth.AuthConst.MEMBER_ID;
 
 import com.server.erentronic.auth.jwt.JwtTokenProvider;
+import com.server.erentronic.common.exception.JwtTokenException;
+import com.server.erentronic.common.message.ErrorDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -36,7 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	private Long parsingJwtToken(HttpServletResponse response, String header) {
 		if (header.isBlank() || !header.startsWith(BEARER)) {
 			response.setStatus(HttpStatus.FORBIDDEN.value());
-			//todo throw new CustomException();
+			throw new JwtTokenException(ErrorDetail.EMPTY_BEARER_JWT_TOKEN);
 		}
 
 		Claims claims = null;
@@ -46,10 +48,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 			claims = jwtTokenProvider.verifyToken(jwtToken);
 		} catch (ExpiredJwtException e) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			// todo throw new JwtTokenException();
+			throw new JwtTokenException(ErrorDetail.EXPIRED_JWT_TOKEN);
 		} catch (JwtException e) {
 			response.setStatus(HttpStatus.FORBIDDEN.value());
-			// todo throw new JwtTokenException();
+			throw new JwtTokenException(ErrorDetail.NOT_VALID_JWT_TOKEN);
 		}
 
 		return Long.valueOf(claims.getAudience());

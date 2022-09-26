@@ -1,5 +1,9 @@
 package com.server.erentronic.auth.interceptor;
 
+import static com.server.erentronic.auth.AuthConst.ACCESS_TOKEN;
+import static com.server.erentronic.auth.AuthConst.BEARER;
+import static com.server.erentronic.auth.AuthConst.MEMBER_ID;
+
 import com.server.erentronic.auth.jwt.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,10 +21,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthInterceptor implements HandlerInterceptor {
 
 	private final JwtTokenProvider jwtTokenProvider;
-
-	public static final String MEMBER_ID = "memberId";
-	public static final String ACCESS_TOKEN = "Access-Token";
-	public static final String BEARER = "bearer";
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,

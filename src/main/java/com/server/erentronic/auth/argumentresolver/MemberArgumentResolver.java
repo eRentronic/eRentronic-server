@@ -1,6 +1,6 @@
 package com.server.erentronic.auth.argumentresolver;
 
-import static com.server.erentronic.auth.interceptor.AuthInterceptor.MEMBER_ID;
+import static com.server.erentronic.auth.AuthConst.MEMBER_ID;
 
 import com.server.erentronic.auth.annotation.LoginId;
 import javax.servlet.http.HttpServletRequest;

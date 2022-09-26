@@ -1,5 +1,8 @@
 package com.server.erentronic.auth.controller;
 
+import static com.server.erentronic.auth.AuthConst.ACCESS_TOKEN;
+import static com.server.erentronic.auth.AuthConst.BEARER;
+
 import com.server.erentronic.auth.dto.LoginRequest;
 import com.server.erentronic.auth.service.AuthService;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,6 @@ public class AuthController {
 	@PostMapping("/login")
 	public void login(@RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
 		String jwtAccessToken = authService.login(loginRequest);
-		response.setHeader("Access-Token", "bearer " + jwtAccessToken);
+		response.setHeader(ACCESS_TOKEN, BEARER + " " + jwtAccessToken);
 	}
 }

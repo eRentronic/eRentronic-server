@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,6 +23,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void configurePathMatch(PathMatchConfigurer configurer) {
 		configurer.addPathPrefix("/api",
 			HandlerTypePredicate.forBasePackage("com.server.erentronic"));
+	}
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+			.allowedOrigins("*");
 	}
 
 	@Override

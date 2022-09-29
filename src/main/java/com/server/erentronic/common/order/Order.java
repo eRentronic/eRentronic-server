@@ -1,6 +1,7 @@
 package com.server.erentronic.common.order;
 
 import com.server.erentronic.item.product.Product;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
+@DiscriminatorColumn(name = "dtype")
 @Table(name = "orders")
 @Getter
 public abstract class Order {
@@ -27,6 +28,9 @@ public abstract class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
+
+	@Column(insertable = false, updatable = false)
+	protected String dtype;
 
 	@JoinColumn
 	@ManyToOne(fetch = FetchType.LAZY)

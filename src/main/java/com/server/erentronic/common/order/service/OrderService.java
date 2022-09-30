@@ -1,7 +1,6 @@
 package com.server.erentronic.common.order.service;
 
 import com.server.erentronic.common.dto.CUDResponse;
-import com.server.erentronic.common.exception.InvalidInputException;
 import com.server.erentronic.common.exception.NoStockException;
 import com.server.erentronic.common.exception.NoSuchItemException;
 import com.server.erentronic.common.exception.NoSuchMemberException;
@@ -13,12 +12,15 @@ import com.server.erentronic.common.message.Message;
 import com.server.erentronic.common.order.Order;
 import com.server.erentronic.common.order.OrderSheet;
 import com.server.erentronic.common.order.OrderState;
+import com.server.erentronic.common.order.dto.OrderHistoryResponses;
+import com.server.erentronic.common.order.dto.OrderSearchRequest;
 import com.server.erentronic.common.order.dto.OrderSheetRequest;
 import com.server.erentronic.common.order.dto.PurchaseRequest;
 import com.server.erentronic.common.order.dto.RentalRequest;
 import com.server.erentronic.common.order.purchace.Purchase;
 import com.server.erentronic.common.order.rental.Rental;
 import com.server.erentronic.common.order.repository.OrderSheetRepository;
+import com.server.erentronic.common.utils.DateUtil;
 import com.server.erentronic.item.product.Product;
 import com.server.erentronic.item.product.ProductRentalUnit;
 import com.server.erentronic.item.product.ProductUnit;
@@ -28,6 +30,7 @@ import com.server.erentronic.item.product.repository.ProductRentalUnitRepository
 import com.server.erentronic.item.product.repository.ProductRepository;
 import com.server.erentronic.item.product.repository.ProductUnitRepository;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Slf4j
 public class OrderService {
 
@@ -46,6 +50,29 @@ public class OrderService {
 	private final ProductUnitRepository productUnitRepository;
 	private final ProductRentalUnitRepository productRentalUnitRepository;
 	private final MemberRepository memberRepository;
+
+	public List<OrderHistoryResponses> getOrderHistory(Long memberId,
+		OrderSearchRequest orderSearchRequest) {
+
+		LocalDateTime startDateTime = LocalDateTime.of(orderSearchRequest.getStartDate(),
+			LocalTime.MIN);
+		LocalDateTime endDateTime = LocalDateTime.of(orderSearchRequest.getEndDate(),
+			LocalTime.MAX);
+
+		DateUtil.validatePeriod(startDateTime, endDateTime);
+
+		Member loginMember = memberRepository.findById(memberId)
+			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER));
+
+		List<OrderSheet> orderSheets = orderSheetRepository.findWithinSpecificPeriod(
+			loginMember, startDateTime, endDateTime);
+
+		String dtype = orderSearchRequest.getDtype();
+
+		return orderSheets.stream()
+			.map(orderSheet -> OrderHistoryResponses.from(orderSheet, dtype))
+			.collect(Collectors.toList());
+	}
 
 	@Transactional
 	public CUDResponse order(Long memberId, OrderSheetRequest orderSheetRequest) {
@@ -94,7 +121,8 @@ public class OrderService {
 		Purchase purchase = Purchase.makePurchase(product, purchaseRequest.getQuantity(),
 			purchaseRequest.getProductTotalPrice());
 
-		List<ProductUnit> units = productUnitRepository.findAllByProductAndState(product, UnitState.SALE);
+		List<ProductUnit> units = productUnitRepository.findAllByProductAndState(product,
+			UnitState.SALE);
 
 		if (units.size() < purchaseRequest.getQuantity()) {
 			throw new NoStockException(ErrorDetail.NO_STOCK_PRODUCT);
@@ -138,7 +166,7 @@ public class OrderService {
 			startDateTime, endDateTime, rentalRequest.getProductTotalPrice());
 
 		List<ProductRentalUnit> units = productRentalUnitRepository.findAllByProductAndState(
-				product, RentalUnitState.RENTAL_AVAILABLE);
+			product, RentalUnitState.RENTAL_AVAILABLE);
 
 		if (units.size() < rentalRequest.getQuantity()) {
 			throw new NoStockException(ErrorDetail.NO_STOCK_PRODUCT);
@@ -153,7 +181,6 @@ public class OrderService {
 
 	@Transactional
 	public CUDResponse cancelOrderSheet(Long memberId, Long orderSheetId) {
-		//todo loginMember와 orderSheet의 멤버가 동일한 사람인지 판별해야 함
 
 		Member loginMember = memberRepository.findById(memberId)
 			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER));

@@ -53,4 +53,8 @@ public abstract class Order {
 	public void assignOrderSheet(OrderSheet orderSheet) {
 		this.orderSheet = orderSheet;
 	}
+
+	public boolean isOrderType(String dtype) {
+		return dtype == null || this.dtype.equals(dtype);
+	}
 }

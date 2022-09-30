@@ -132,7 +132,7 @@ public class OrderService {
 
 		LocalDateTime startDateTime = rentalRequest.getStartDateTime();
 		LocalDateTime endDateTime = rentalRequest.getEndDateTime();
-		validateRentalPeriod(startDateTime, endDateTime);
+		DateUtil.validatePeriod(startDateTime, endDateTime);
 
 		Rental rental = Rental.makeRental(product, rentalRequest.getQuantity(),
 			startDateTime, endDateTime, rentalRequest.getProductTotalPrice());
@@ -181,13 +181,6 @@ public class OrderService {
 		prevOrderSheet.changeState(OrderState.CANCELED);
 
 		return CUDResponse.of(orderSheetId, Message.ORDER_CANCEL_MESSAGE);
-	}
-  
-  private void validateRentalPeriod(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-		if (startDateTime.toLocalDate().isEqual(endDateTime.toLocalDate())
-			|| startDateTime.toLocalDate().isAfter(endDateTime.toLocalDate())) {
-			throw new InvalidInputException(ErrorDetail.INVALID_RENTAL_PERIOD);
-		}
 	}
 
 	private void validateTotalPrice(Integer orderTotalPrice, Integer calculatedTotalPrice) {

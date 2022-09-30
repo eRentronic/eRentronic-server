@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorDetail {
 
 	INVALID_INPUT_VALUE("입력 값이 올바르지 않습니다.", 400),
-	INVALID_RENTAL_PERIOD("대여 시작일이 대여 종료일 이전이어야합니다.", 400),
+	INVALID_PERIOD("시작일이 종료일 이전이어야합니다.", 400),
 
 	NOT_EQUALS_REAL_PRICE("주문한 해당 상품에 대한 총 가격이 일치하지 않습니다.", 400),
 	NOT_EQUALS_REAL_TOTAL_PRICE("주문한 모든 상품에 대한 총 가격이 일치하지 않습니다.", 400),

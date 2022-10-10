@@ -11,7 +11,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
-@RestControllerAdvice
+@Deprecated
+//@RestControllerAdvice
 @RequiredArgsConstructor
 public class RequestBodyControllerAdvice implements RequestBodyAdvice {
 

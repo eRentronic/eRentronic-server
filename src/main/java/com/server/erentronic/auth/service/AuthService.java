@@ -1,5 +1,6 @@
 package com.server.erentronic.auth.service;
 
+import com.server.erentronic.common.aop.EncodePassword;
 import com.server.erentronic.common.exception.NoSuchMemberException;
 import com.server.erentronic.common.member.Member;
 import com.server.erentronic.common.member.repository.MemberRepository;
@@ -9,15 +10,18 @@ import com.server.erentronic.common.message.ErrorDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Slf4j
 public class AuthService {
 
 	private final MemberRepository memberRepository;
 	private final JwtTokenProvider jwtTokenProvider;
 
+	@EncodePassword
 	public String login(LoginRequest request) {
 		String email = request.getEmail();
 		String password = request.getPassword();

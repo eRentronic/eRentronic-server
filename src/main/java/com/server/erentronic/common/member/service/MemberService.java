@@ -1,5 +1,6 @@
 package com.server.erentronic.common.member.service;
 
+import com.server.erentronic.common.aop.EncodePassword;
 import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.AuthException;
 import com.server.erentronic.common.member.Member;
@@ -19,6 +20,7 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
+	@EncodePassword
 	@Transactional
 	public CUDResponse singUp(SignUpRequest signUpRequest) {
 

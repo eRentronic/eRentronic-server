@@ -19,8 +19,11 @@ repositories {
 }
 
 dependencies {
-    //web
+    // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

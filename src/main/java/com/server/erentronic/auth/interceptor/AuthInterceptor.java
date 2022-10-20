@@ -1,8 +1,6 @@
 package com.server.erentronic.auth.interceptor;
 
-import static com.server.erentronic.auth.AuthConst.ACCESS_TOKEN;
-import static com.server.erentronic.auth.AuthConst.BEARER;
-import static com.server.erentronic.auth.AuthConst.MEMBER_ID;
+import static com.server.erentronic.auth.AuthConst.*;
 
 import com.server.erentronic.auth.jwt.JwtTokenProvider;
 import com.server.erentronic.common.exception.JwtTokenException;
@@ -28,6 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 		Object handler) {
 
+//		String header = request.getHeader(AUTHORIZATION);
 		String header = request.getHeader(ACCESS_TOKEN);
 		Long memberId = parsingJwtToken(response, header);
 		request.setAttribute(MEMBER_ID, memberId);

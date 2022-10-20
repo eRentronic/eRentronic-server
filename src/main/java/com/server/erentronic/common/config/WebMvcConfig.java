@@ -1,5 +1,6 @@
 package com.server.erentronic.common.config;
 
+import com.server.erentronic.auth.AuthConst;
 import com.server.erentronic.auth.argumentresolver.MemberArgumentResolver;
 import com.server.erentronic.auth.interceptor.AuthInterceptor;
 import java.util.List;
@@ -28,8 +29,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-			.allowedOrigins("*")
-			.exposedHeaders("Access-Token");
+			.allowedOrigins("http://localhost:3000")
+			.exposedHeaders(AuthConst.ACCESS_TOKEN, AuthConst.AUTHORIZATION)
+			.allowCredentials(true);
 	}
 
 	@Override

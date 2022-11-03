@@ -9,33 +9,35 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+
 @Component
 public class JwtTokenProvider {
 
 	private final String issuer;
-	private final String secretKey;
+	private final SecretKey secretKey;
 	private final Long accessTokenExpirationHour;
 
 	public JwtTokenProvider(JwtProperties properties) {
 		this.issuer = properties.getIssuer();
-		this.secretKey = properties.getSecretKey();
+		this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(properties.getSecretKey()));
 		this.accessTokenExpirationHour = properties.getAccessTokenExpirationHour();
 	}
 
 	public String makeJwtAccessToken(Member member) {
+		LocalDateTime now = LocalDateTime.now();
 		return Jwts.builder()
-			.setAudience(member.getId().toString())
+			.setAudience(String.valueOf(member.getId()))
 			.setIssuer(issuer)
-			.setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-			.setExpiration(Timestamp.valueOf(LocalDateTime.now().plusHours(accessTokenExpirationHour)))
-			.signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)))
+			.setIssuedAt(Timestamp.valueOf(now))
+			.setExpiration(Timestamp.valueOf(now.plusHours(accessTokenExpirationHour)))
+			.signWith(secretKey)
 			.compact();
-
 	}
 
 	public Claims verifyToken(String jwtToken) {
 		return Jwts.parserBuilder()
-			.setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)))
+			.setSigningKey(secretKey)
 			.build()
 			.parseClaimsJws(jwtToken)
 			.getBody();

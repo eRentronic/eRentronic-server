@@ -28,9 +28,9 @@ public enum ErrorDetail {
 	NO_SUCH_MEMBER_WITH_EMAIL("해당 email 의 회원이 존재하지 않습니다.", 400),
 	NOT_MATCH_PASSWORD("비밀번호가 올바르지 않습니다.", 400),
 	NOT_MATCH_ORDER_SHEET_MEMBER("해당 주문서의 회원과 로그인한 회원이 일치하지 않습니다.", 400),
-	EMPTY_BEARER_JWT_TOKEN("bearer JWT 토큰이 존재하지 않습니다.", 400),
-	EXPIRED_JWT_TOKEN("기간이 만료된 토큰입니다.", 400),
-	NOT_VALID_JWT_TOKEN("유효하지 않은 토큰입니다.", 400);
+	EMPTY_BEARER_JWT_TOKEN("bearer JWT 토큰이 존재하지 않습니다.", 401),
+	EXPIRED_JWT_TOKEN("기간이 만료된 토큰입니다.", 401),
+	NOT_VALID_JWT_TOKEN("유효하지 않은 토큰입니다.", 401);
 
 	private final String message;
 	private final int status;

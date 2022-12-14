@@ -35,6 +35,10 @@ public class Member {
 	@Embedded
 	private Address address;
 
+	private String profile;
+
+	private String profileImage;
+
 	@Builder
 	private Member(Long id, String name, String email, String password, Address address) {
 		this.id = id;
@@ -42,6 +46,8 @@ public class Member {
 		this.email = email;
 		this.password = password;
 		this.address = address;
+		this.profile = "기본 자기소개입니다. 자기소개를 작성해주세요.";
+		this.profileImage = "https://cdn.pixabay.com/photo/2017/03/24/03/20/keyboard-2170063_1280.png";
 	}
 
 	public void validatePassword(String password) {

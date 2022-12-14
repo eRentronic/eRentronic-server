@@ -1,7 +1,6 @@
 package com.server.erentronic.auth.interceptor;
 
 import static com.server.erentronic.auth.AuthConst.ACCESS_TOKEN;
-import static com.server.erentronic.auth.AuthConst.BEARER;
 import static com.server.erentronic.auth.AuthConst.MEMBER_ID;
 
 import com.server.erentronic.auth.jwt.JwtTokenProvider;
@@ -13,7 +12,6 @@ import io.jsonwebtoken.JwtException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,24 +26,22 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 		Object handler) {
 
-		String header = request.getHeader(ACCESS_TOKEN);
-		Long memberId = parsingJwtToken(response, header);
-		request.setAttribute(MEMBER_ID, memberId);
+		String accessToken = request.getParameter(ACCESS_TOKEN);
+
+		if (accessToken == null) {
+			return true;
+		}
+
+		Long loginMemberId = parsingJwtToken(response, accessToken);
+		request.setAttribute(MEMBER_ID, loginMemberId);
 
 		return true;
 	}
 
-	private Long parsingJwtToken(HttpServletResponse response, String header) {
-		if (header.isBlank() || !header.startsWith(BEARER)) {
-			response.setStatus(HttpStatus.FORBIDDEN.value());
-			throw new JwtTokenException(ErrorDetail.EMPTY_BEARER_JWT_TOKEN);
-		}
-
-		Claims claims = null;
-
+	private Long parsingJwtToken(HttpServletResponse response, String jwtToken) {
 		try {
-			String jwtToken = header.replaceFirst(BEARER, Strings.EMPTY).trim();
-			claims = jwtTokenProvider.verifyToken(jwtToken);
+			Claims claims = jwtTokenProvider.verifyToken(jwtToken);
+			return Long.valueOf(claims.getAudience());
 		} catch (ExpiredJwtException e) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			throw new JwtTokenException(ErrorDetail.EXPIRED_JWT_TOKEN);
@@ -53,7 +49,27 @@ public class AuthInterceptor implements HandlerInterceptor {
 			response.setStatus(HttpStatus.FORBIDDEN.value());
 			throw new JwtTokenException(ErrorDetail.NOT_VALID_JWT_TOKEN);
 		}
-
-		return Long.valueOf(claims.getAudience());
 	}
+
+//	private Long parsingJwtToken(HttpServletResponse response, String header) {
+//		if (header.isBlank() || !header.startsWith(BEARER)) {
+//			response.setStatus(HttpStatus.FORBIDDEN.value());
+//			throw new JwtTokenException(ErrorDetail.EMPTY_BEARER_JWT_TOKEN);
+//		}
+//
+//		Claims claims = null;
+//
+//		try {
+//			String jwtToken = header.replaceFirst(BEARER, Strings.EMPTY).trim();
+//			claims = jwtTokenProvider.verifyToken(jwtToken);
+//		} catch (ExpiredJwtException e) {
+//			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//			throw new JwtTokenException(ErrorDetail.EXPIRED_JWT_TOKEN);
+//		} catch (JwtException e) {
+//			response.setStatus(HttpStatus.FORBIDDEN.value());
+//			throw new JwtTokenException(ErrorDetail.NOT_VALID_JWT_TOKEN);
+//		}
+//
+//		return Long.valueOf(claims.getAudience());
+//	}
 }

@@ -3,6 +3,7 @@ package com.server.erentronic.common.member.service;
 import com.server.erentronic.common.dto.CUDResponse;
 import com.server.erentronic.common.exception.AuthException;
 import com.server.erentronic.common.member.Member;
+import com.server.erentronic.common.member.dto.MemberResponse;
 import com.server.erentronic.common.member.dto.SignUpRequest;
 import com.server.erentronic.common.member.repository.MemberRepository;
 import com.server.erentronic.common.message.ErrorDetail;
@@ -27,6 +28,14 @@ public class MemberService {
 		Member member = signUpRequest.toEntity();
 		memberRepository.save(member);
 		return CUDResponse.of(member.getId(), Message.MEMBER_SIGN_UP_MESSAGE);
+	}
+
+	@Transactional(readOnly = true)
+	public MemberResponse getMemberDetail(Long id) {
+		Member member = memberRepository.findById(id)
+			.orElseThrow(RuntimeException::new);
+
+		return MemberResponse.from(member);
 	}
 
 	private void validateDuplicatedEmail(String email) {

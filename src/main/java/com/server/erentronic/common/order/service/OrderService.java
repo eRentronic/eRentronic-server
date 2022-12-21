@@ -64,8 +64,14 @@ public class OrderService {
 		Member loginMember = memberRepository.findById(memberId)
 			.orElseThrow(() -> new NoSuchMemberException(ErrorDetail.NO_SUCH_MEMBER));
 
+		log.info("주문조회한 멤버 ID: {}", loginMember.getId());
+
 		List<OrderSheet> orderSheets = orderSheetRepository.findWithinSpecificPeriod(
 			loginMember, startDateTime, endDateTime);
+
+		log.info("startDateTime: {}", startDateTime);
+		log.info("endDateTime: {}", endDateTime);
+		log.info("조회된 주문목록의 개수: {}", orderSheets.size());
 
 		String dtype = orderSearchRequest.getDtype();
 
